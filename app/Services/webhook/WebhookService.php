@@ -2,6 +2,7 @@
 
 namespace App\Services\webhook;
 
+use App\Models\InputData;
 use App\Services\messenger\SendWhatsapp;
 use App\Services\whatsapp_numbers\WhatsappNumberService;
 use Illuminate\Http\Request;
@@ -38,6 +39,15 @@ class WebhookService
         
         if (!$entry) {
             throw new \Exception("Error al recibir el webhook", 400);
+        }
+
+        $saveData = InputData::create([
+            'company_id' => $company_id,
+            'data' => $entry,
+        ]);
+
+        if (!$saveData) {
+            throw new \Exception("Error al guardar el webhook", 500);
         }
 
         $changes = $entry["changes"][0] ?? null;
