@@ -18,8 +18,6 @@ class SendWhatsapp
     {
         $API_URL = Constants::whatsappAPIURL();
         $url = "{$API_URL}/{$phone_number_id}/messages";
-        $response = DefaultWhatsapp::send($url, $from, $api_key, $type);
-
-        return $response;
+        return DefaultWhatsapp::send($url, $from, $api_key, $type);
     }
 }

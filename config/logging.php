@@ -128,13 +128,34 @@ return [
         ],
 
         // Custom channels error system in errors.log
-        'error' => [
+        'errors' => [
             'driver' => 'single',
             'path' => storage_path('logs/errors.log'),
             'level' => env('LOG_LEVEL', 'error'),
             'replace_placeholders' => true,
-        ]
+        ],
 
+        
+        'whatsapp_entries' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/whatsapp_entries.log'),
+            'level' => env('LOG_LEVEL', 'info'),
+            'replace_placeholders' => true,
+        ],
+
+        'whatsapp_output' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/whatsapp_output.log'),
+            'level' => env('LOG_LEVEL', 'info'),
+            'replace_placeholders' => true,
+        ],
+
+        'whatsapp_statuses' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/whatsapp_statuses.log'),
+            'level' => env('LOG_LEVEL', 'info'),
+            'replace_placeholders' => true,
+        ],
     ],
 
 ];

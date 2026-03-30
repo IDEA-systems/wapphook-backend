@@ -3,6 +3,7 @@
 namespace App\Repositories\whatsapp_numbers;
 
 use App\Models\WhatsappNumber;
+use App\Services\logs\LogService;
 
 class WhatsappNumberRepository
 {
@@ -28,7 +29,7 @@ class WhatsappNumberRepository
                 ->where('company_id', $company_id)
                 ->first();
         } catch (\Exception $error) {
-            \Log::channel('error')->error($error->getMessage());
+            LogService::error($error->getMessage());
             throw new \Exception("Error al buscar el número de whatsapp", 500);
         }
     }

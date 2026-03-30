@@ -3,6 +3,7 @@
 namespace App\Repositories\companies;
 
 use App\Models\Company;
+use App\Services\logs\LogService;
 
 class CompanyRepository
 {
@@ -26,7 +27,7 @@ class CompanyRepository
         try {
             return Company::find($company_id);
         } catch (\Exception $error) {
-            \Log::channel('error')->error($error->getMessage());
+            LogService::error($error->getMessage());
             throw new \Exception("Error al buscar la compañía", 500);
         }
     }
