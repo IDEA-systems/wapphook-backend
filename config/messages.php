@@ -10,5 +10,5 @@ return [
     | respuestas disponibles para un tipo de mensaje específico.
     |
     */
-    'not_available' => 'Lo sentimos, las respuestas a este tipo de mensajes aún no están disponibles.',
+    'not_available' => 'Lo sentimos, las respuestas a este chat no están disponibles.',
 ];
