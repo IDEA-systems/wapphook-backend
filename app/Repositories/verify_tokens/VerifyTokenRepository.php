@@ -3,6 +3,7 @@
 namespace App\Repositories\verify_tokens;
 
 use App\Models\VerifyToken;
+use App\Services\logs\LogService;
 
 class VerifyTokenRepository
 {
@@ -30,7 +31,7 @@ class VerifyTokenRepository
                 ->where('company_id', $company_id)
                 ->first();
         } catch (\Exception $error) {
-            \Log::channel('error')->error($error->getMessage());
+            LogService::error($error->getMessage());
             throw new \Exception("Error al buscar el token de verificación", 500);
         }
     }

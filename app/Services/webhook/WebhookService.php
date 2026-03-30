@@ -3,6 +3,7 @@
 namespace App\Services\webhook;
 
 use App\Models\InputData;
+use App\Services\logs\LogService;
 use App\Services\messenger\SendWhatsapp;
 use App\Services\whatsapp_numbers\WhatsappNumberService;
 use Illuminate\Http\Request;
@@ -35,81 +36,28 @@ class WebhookService
 
     public static function receive(Request $request, string $company_id)
     {
-        $entry = $request->entry[0] ?? null;
-        
-        if (!$entry) {
-            throw new \Exception("Error al recibir el webhook", 400);
-        }
-
-        $saveData = InputData::create([
-            'company_id' => $company_id,
-            'data' => $entry,
-        ]);
-
-        if (!$saveData) {
-            throw new \Exception("Error al guardar el webhook", 500);
-        }
-
-        $changes = $entry["changes"][0] ?? null;
-        
-        if (!$changes) {
-            throw new \Exception("Error al recibir el webhook", 400);
-        }
-
-        $value = $changes["value"] ?? null;
-
-        if (!$value) {
-            throw new \Exception("Error al recibir el webhook", 400);
-        }
-
-        $metadata = $value["metadata"] ?? null;
-
-        if (!$metadata) {
-            throw new \Exception("Error al recibir el webhook", 400);
-        }
-
-        $contacts = $value["contacts"][0] ?? null;
-
-        if (!$contacts) {
-            throw new \Exception("Error al recibir el webhook", 400);
-        }
-
-        $messages = $value["messages"][0] ?? null;
-
-        if (!$messages) {
-            throw new \Exception("Error al recibir el webhook", 400);
-        }
+        /**
+         * Estos son los eventos que se disparan cuando se recibe un mensaje, 
+         * o se responde a un mensaje, etc por parte del cliente que 
+         * envió el mensaje 
+        */
+        $entryMessages = isset($request->entry[0]["changes"][0]["value"]["messages"][0]);
 
         /**
-         * @var mixed
-         * 
-         * Datos que identifican a la empresa que recibe los mensajes
-         * Con estos datos se sabe a que numero de whatsapp se envio este mensaje
-         * Util si se tiene mas de un numero de whatsapp en la cuenta de whatsapp
-         */
-        $displayPhoneNumber = $metadata["display_phone_number"] ?? null; 
-        $phone_number_id = $metadata["phone_number_id"] ?? null;
-        
-        $whatsappNumber = WhatsappNumberService::show($phone_number_id, $company_id);
+         *  Estos eventos se disparan cuando se responde a un mensaje, 
+         * o se entrega un mensaje, etc por parte de la cuenta de whatsapp, 
+         * no por parte del cliente que envió el mensaje 
+        */
+        $statusesResponse = isset($request->entry[0]["changes"][0]["value"]["statuses"][0]);
 
-        if (!$whatsappNumber) {
-            throw new \Exception("Error al obtener el numero de whatsapp", 500);
+        if ($entryMessages) {
+            return WebhookEntries::process($request, $company_id);
         }
 
-        // Enviar un mensaje al numero de teléfono que envió el mensaje
-        // Utilizando la API de WhatsApp Business
-        // Con una respues predefinida, en la configuracion
-        $from = $messages["from"] ?? null;
-        
-        if (!$from) {
-            throw new \Exception("Error al recibir el webhook", 400);
+        if ($statusesResponse) {
+            $response =json_encode($request->entry[0]);
+            LogService::whatsappStatuses($response);
+            // TODO: Save messages in database
         }
-
-        $type = "not_available";
-        $api_key = $whatsappNumber->api_key;
-
-        $message = SendWhatsapp::default($from, $phone_number_id, $api_key, $type);
-
-        return $message;
     }
 }

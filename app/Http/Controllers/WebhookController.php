@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\logs\LogService;
 use App\Services\webhook\WebhookService;
 use Illuminate\Http\Request;
 
@@ -43,7 +44,8 @@ class WebhookController extends Controller
         try {
             $response = WebhookService::receive($request, $company_id);
             return response()->json($response, 200);
-        } catch (\Exception $th) {
+        } catch (\Exception $error) {
+            LogService::error($error->getMessage());
             return response()->json([], 500);
         }
     }
