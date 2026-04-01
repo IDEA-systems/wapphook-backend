@@ -135,24 +135,31 @@ return [
             'replace_placeholders' => true,
         ],
 
+        'activities' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/activities.log'),
+            'level' => env('LOG_LEVEL', 'info'),
+            'replace_placeholders' => true,
+        ],
+
         
-        'whatsapp_entries' => [
+        'entries' => [
             'driver' => 'single',
-            'path' => storage_path('logs/whatsapp_entries.log'),
+            'path' => storage_path('logs/entries.log'),
             'level' => env('LOG_LEVEL', 'info'),
             'replace_placeholders' => true,
         ],
 
-        'whatsapp_output' => [
+        'output' => [
             'driver' => 'single',
-            'path' => storage_path('logs/whatsapp_output.log'),
+            'path' => storage_path('logs/output.log'),
             'level' => env('LOG_LEVEL', 'info'),
             'replace_placeholders' => true,
         ],
 
-        'whatsapp_statuses' => [
+        'statuses' => [
             'driver' => 'single',
-            'path' => storage_path('logs/whatsapp_statuses.log'),
+            'path' => storage_path('logs/statuses.log'),
             'level' => env('LOG_LEVEL', 'info'),
             'replace_placeholders' => true,
         ],

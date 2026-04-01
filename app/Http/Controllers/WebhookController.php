@@ -42,8 +42,8 @@ class WebhookController extends Controller
     public function receive(Request $request, $company_id)
     {
         try {
-            $response = WebhookService::receive($request, $company_id);
-            return response()->json($response, 200);
+            WebhookService::receive($request, $company_id);
+            return response()->json([], 200);
         } catch (\Exception $error) {
             LogService::error($error->getMessage());
             return response()->json([], 500);

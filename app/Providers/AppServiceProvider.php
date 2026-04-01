@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Interfaces\StoreWhatsappMessageInterface;
+use App\Services\whatsapp_messages\StoreWhatsappMessageService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -11,7 +13,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(
+            StoreWhatsappMessageInterface::class, 
+            StoreWhatsappMessageService::class
+        );
     }
 
     /**
@@ -19,6 +24,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        
     }
 }

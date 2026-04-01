@@ -15,7 +15,8 @@ class WhatsappChat extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'number_id',
+        "id",
+        'whatsapp_number_id',
         'company_id',
         'from',
         'contact_name',
@@ -27,7 +28,7 @@ class WhatsappChat extends Model
 
     protected $casts = [
         'id' => 'string',
-        'number_id' => 'string',
+        'whatsapp_number_id' => 'string',
         'company_id' => 'string',
         'from' => 'string',
         'contact_name' => 'string',
@@ -39,23 +40,11 @@ class WhatsappChat extends Model
 
     public function number()
     {
-        return $this->belongsTo(WhatsappNumber::class, 'number_id', 'id');
+        return $this->belongsTo(WhatsappNumber::class, 'whatsapp_number_id', 'id');
     }
 
     public function company()
     {
         return $this->belongsTo(Company::class, 'company_id', 'id');
-    }
-
-    // Crear un id único para cada chat al crear una nueva instancia
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($model) {
-            $total = self::count() + 1;
-            $date = date('Ymdis');
-            $model->id = "CHAT-{$date}-". str_pad($total, 8, '0', STR_PAD_LEFT);
-        });
     }
 }
