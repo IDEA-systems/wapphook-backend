@@ -24,12 +24,12 @@ class WhatsappNumberService
      */
     public static function show(string $id, string $company_id)
     {
-        $whatsappNumber = WhatsappNumberRepository::show($id, $company_id);  
+        $number = WhatsappNumberRepository::show($id, $company_id);  
 
-        if (!$whatsappNumber) {
-            throw new \Exception("El numero seleccionado no existe", 404);
+        if (!$number) {
+            throw new \Exception("El numero seleccionado no existe", 400);
         }
 
-        return $whatsappNumber;
+        return $number;
     }
 }

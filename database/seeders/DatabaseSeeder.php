@@ -7,7 +7,7 @@ use App\Models\MetaApp;
 use App\Models\VerifyToken;
 use App\Models\WhatsappAccount;
 use App\Models\WhatsappNumber;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\WhatsappResponse;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -17,10 +17,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Company::factory()->count(1)->create();
-        MetaApp::factory()->count(1)->create();
-        WhatsappAccount::factory()->count(1)->create();
-        WhatsappNumber::factory()->count(1)->create();
-        VerifyToken::factory()->count(1)->create();
+        // Company::factory()->count(1)->create();
+        // MetaApp::factory()->count(1)->create();
+        // WhatsappAccount::factory()->count(1)->create();
+        // WhatsappNumber::factory()->count(1)->create();
+        // VerifyToken::factory()->count(1)->create();
+        WhatsappResponse::factory()->count(1)->create();
     }
 }

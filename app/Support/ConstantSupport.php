@@ -2,7 +2,7 @@
 
 namespace App\Support;
 
-class Constants
+class ConstantSupport
 {
     /**
      * Create a new class instance.
@@ -12,8 +12,8 @@ class Constants
         //
     }
 
-    public static function whatsappAPIURL()
+    public static function graphURL()
     {
-        return config('constants.whatsapp_api_url');
+        return config('constants.graph_url');
     }
 }

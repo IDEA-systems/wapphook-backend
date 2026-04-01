@@ -12,22 +12,28 @@ class LogService
         //
     }
     
-    public static function whatsappEntries($message)
+    public static function entries($message)
     {
-        \Log::channel('whatsapp_entries')
-            ->info("Mensaje recibido:\n{$message}\n\n");
+        \Log::channel('entries')
+            ->info("Mensaje recibido:\n{$message}\n");
     }
 
-    public static function whatsappOutput($message)
+    public static function output($message)
     {
-        \Log::channel('whatsapp_output')
-            ->info("Mensaje enviado:\n{$message}\n\n");
+        \Log::channel('output')
+            ->info("Mensaje enviado:\n{$message}\n");
     }
 
-    public static function whatsappStatuses($message)
+    public static function statuses($message)
     {
-        \Log::channel('whatsapp_statuses')
-            ->info("Mensaje actualizado:\n{$message}\n\n");
+        \Log::channel('statuses')
+            ->info("Mensaje actualizado:\n{$message}\n");
+    }
+
+    public static function activity($message)
+    {
+        \Log::channel('activities')
+            ->info("Actividad registrada: \n{$message}\n");
     }
 
     public static function error($message)
