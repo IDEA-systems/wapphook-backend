@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MetaApp extends Model
+class Application extends Model
 {
     use HasFactory;
-    protected $table = 'meta_apps';
+    protected $table = 'applications';
     protected $primaryKey = 'id';
     protected $keyType = 'string';
     public $incrementing = false;

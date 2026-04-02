@@ -12,8 +12,7 @@ class WhatsappMessageObserver
      */
     public function created(WhatsappMessage $whatsappMessage): void
     {
-        $data = json_encode($whatsappMessage);
-        LogService::activity($data);
+        LogService::activity($whatsappMessage);
     }
 
     /**

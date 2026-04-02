@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('whatsapp_chats', function (Blueprint $table) {
             $table->string('id')->primary();
-            $table->string('number_id');
+            $table->string('whatsapp_number_id');
             $table->string('company_id');
             $table->string('from');
 
@@ -39,7 +39,7 @@ return new class extends Migration
 
             $table->timestamps();
 
-            $table->foreign('number_id')
+            $table->foreign('whatsapp_number_id')
                 ->references('id')
                 ->on('whatsapp_numbers')
                 ->onDelete('cascade')

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('meta_apps', function (Blueprint $table) {
+        Schema::create('applications', function (Blueprint $table) {
             $table->string('id')->primary();
             $table->string('company_id');
             $table->string('name');
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('meta_apps');
+        Schema::dropIfExists('applications');
     }
 };

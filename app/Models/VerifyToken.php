@@ -17,13 +17,13 @@ class VerifyToken extends Model
 
     protected $fillable = [
         'company_id',
-        'meta_app_id',
+        'application_id',
     ];
 
     protected $casts = [
         'id' => 'string',
         'company_id' => 'string',
-        'meta_app_id' => 'string',
+        'application_id' => 'string',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
@@ -36,7 +36,7 @@ class VerifyToken extends Model
 
     public function metaApp()
     {
-        return $this->belongsTo(MetaApp::class);
+        return $this->belongsTo(Application::class);
     }
 
     // Agregar el id único al crear una nueva instancia
@@ -44,8 +44,8 @@ class VerifyToken extends Model
     {
         parent::boot();
         
-        static::creating(function ($verifyToken) {
-            $verifyToken->id = Str::random(40);
+        static::creating(function ($model) {
+            $model->id = Str::random(40);
         });
     }
 }

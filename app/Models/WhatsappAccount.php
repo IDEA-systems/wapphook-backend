@@ -22,7 +22,7 @@ class WhatsappAccount extends Model
     protected $fillable = [
         'id',
         'company_id',
-        'meta_app_id',
+        'application_id',
         'name',
     ];
 
@@ -34,7 +34,7 @@ class WhatsappAccount extends Model
     protected $casts = [
         'id' => 'string',
         'company_id' => 'string',
-        'meta_app_id' => 'string',
+        'application_id' => 'string',
         'name' => 'string',
     ];
 
@@ -47,10 +47,10 @@ class WhatsappAccount extends Model
     }
 
     /**
-     * Get the MetaApp associated with the WhatsApp account.
+     * Get the Application associated with the WhatsApp account.
      */
-    public function metaApp()
+    public function application()
     {
-        return $this->belongsTo(MetaApp::class, 'meta_app_id', 'id');
+        return $this->belongsTo(Application::class, 'application_id', 'id');
     }
 }

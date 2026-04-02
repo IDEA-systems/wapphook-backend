@@ -3,13 +3,13 @@
 namespace Database\Factories;
 
 use App\Models\Company;
-use App\Models\MetaApp;
+use App\Models\Application;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<MetaApp>
+ * @extends Factory<Application>
  */
-class MetaAppFactory extends Factory
+class ApplicationFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -19,7 +19,7 @@ class MetaAppFactory extends Factory
     public function definition(): array
     {
         return [
-            "id" => $this->faker->uuid(),
+            "id" => "1552161089185160",
             "company_id" => Company::inRandomOrder()->first()->id,
             "name" => $this->faker->name()
         ];

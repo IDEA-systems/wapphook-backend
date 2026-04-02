@@ -18,7 +18,7 @@ return new class extends Migration
         Schema::create('verify_tokens', function (Blueprint $table) {
             $table->string('id')->primary();
             $table->string('company_id');
-            $table->string('meta_app_id');
+            $table->string('application_id');
             $table->timestamps();
 
             $table->foreign('company_id')
@@ -27,9 +27,9 @@ return new class extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
                 
-            $table->foreign('meta_app_id')
+            $table->foreign('application_id')
                 ->references('id')
-                ->on('meta_apps')
+                ->on('applications')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
         });
