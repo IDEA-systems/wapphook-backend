@@ -34,16 +34,13 @@ class WhatsappNumber extends Model
         'pin' => 'string',
     ];
 
-    public function company()
+    public function companyData()
     {
         return $this->belongsTo(Company::class, 'company_id', 'id');
     }
 
-    public function account()
+    public function accountData()
     {
         return $this->belongsTo(WhatsappAccount::class, 'whatsapp_account_id', 'id');
     }
-
-    // El id del numero sera el que whatsapp le asigne, 
-    // por lo que no se genera un id único al crear una nueva instancia
 }

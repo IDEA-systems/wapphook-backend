@@ -9,6 +9,7 @@ use Str;
 class VerifyToken extends Model
 {
     use HasFactory;
+    
     protected $table = 'verify_tokens';
     protected $primaryKey = 'id';
     protected $keyType = 'string';

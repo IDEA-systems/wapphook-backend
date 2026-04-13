@@ -14,8 +14,8 @@ class WhatsappResponseService
         //
     }
 
-    public static function default(string $company_id)
+    public static function default(string $companyId)
     {
-        return WhatsappResponseRepository::default($company_id);
+        return WhatsappResponseRepository::default($companyId);
     }
 }

@@ -22,12 +22,12 @@ class VerifytokenService
      * @throws \Exception
      * @return \App\Models\VerifyToken
      */
-    public static function show(string $id, string $company_id)
+    public static function show(string $id, string $companyId)
     {
-        $verifyToken = VerifyTokenRepository::show($id, $company_id);
+        $verifyToken = VerifyTokenRepository::show($id, $companyId);
 
         if (!$verifyToken) {
-            throw new \Exception("El token seleccionado no existe", 404);
+            throw new \Exception("El token seleccionado no existe", 400);
         }
 
         return $verifyToken;

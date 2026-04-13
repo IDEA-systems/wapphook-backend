@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Application extends Model
 {
     use HasFactory;
+    
     protected $table = 'applications';
     protected $primaryKey = 'id';
     protected $keyType = 'string';
@@ -38,7 +39,7 @@ class Application extends Model
         'updated_at' => 'datetime',
     ];
 
-    public function company()
+    public function companyData()
     {
         return $this->belongsTo(Company::class, 'company_id', 'id');
     }

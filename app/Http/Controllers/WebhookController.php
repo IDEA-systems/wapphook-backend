@@ -17,16 +17,26 @@ class WebhookController extends Controller
      * Lógica para suscribirse al webhook
      * 
      * @param Request $request
-     * @param mixed $company_id
+     * @param mixed $companyId
      * @return \Illuminate\Http\Response
      */
-    public function suscribe(Request $request, $company_id)
+    public function suscribe(Request $request, $companyId)
     {
         try {
-            $response = WebhookService::suscribe($request, $company_id);
+
+            $response = WebhookService::suscribe($request, $companyId);
             return response($response, 200);
-        } catch (\Exception $th) {
-            return response("", 403);
+
+        } catch (\Exception $error) {
+            
+            $message = $error->getMessage();
+            LogService::error("WebhookController@suscribe: {$message}");
+
+            return response([
+                "name" => "WebhookSuscribeError",
+                "message" => "Error al suscribir al webhook",
+            ], 403);
+            
         }
     }
 
@@ -36,17 +46,26 @@ class WebhookController extends Controller
      * Lógica para recibir y procesar los datos del webhook
      * 
      * @param Request $request
-     * @param mixed $company_id
+     * @param mixed $companyId
      * @return \Illuminate\Http\JsonResponse
      */
-    public function receive(Request $request, $company_id)
+    public function receive(Request $request, $companyId)
     {
         try {
-            WebhookService::receive($request, $company_id);
-            return response()->json([], 200);
+
+            $response = WebhookService::receive($request, $companyId);
+            return response()->json($response, 200);
+
         } catch (\Exception $error) {
-            LogService::error($error->getMessage());
-            return response()->json([], 500);
+
+            $message = $error->getMessage();
+            LogService::error("WebhookController@receive: {$message}");
+            
+            return response()->json([
+                "name" => "WebhookReceiveError",
+                "message" => "Error al procesar el webhook",
+            ], 500);
+
         }
     }
 }

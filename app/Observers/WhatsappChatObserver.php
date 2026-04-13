@@ -12,7 +12,7 @@ class WhatsappChatObserver
      */
     public function created(WhatsappChat $whatsappChat): void
     {
-        LogService::activity($whatsappChat);
+        WhatsappChatObserverProcess::create($whatsappChat);
     }
 
     /**

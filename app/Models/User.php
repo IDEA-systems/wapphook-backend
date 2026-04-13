@@ -11,6 +11,7 @@ class User extends Model
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory;
+    
     protected $table = 'users';
     protected $primaryKey = 'id';
     protected $keyType = 'string';

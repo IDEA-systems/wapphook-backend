@@ -20,7 +20,8 @@ class StoreWhatsappChatRepository
         try {
             return WhatsappChat::create($data);
         } catch (\Exception $error) {
-            LogService::error($error->getMessage());
+            $message = $error->getMessage();
+            LogService::error("StoreWhatsappChatRepository@store: $message");
             throw new \Exception("Error al crear el chat de whatsapp");
         }
     }

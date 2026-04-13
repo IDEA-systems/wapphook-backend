@@ -3,7 +3,7 @@
 namespace App\Repositories\whatsapp_numbers;
 
 use App\Models\WhatsappNumber;
-use App\Services\logs\LogService;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class WhatsappNumberRepository
 {
@@ -16,21 +16,71 @@ class WhatsappNumberRepository
     }
 
     /**
+     * Index whatsapp numbers with filters and pagination.
+     *
+     * @param string $companyId
+     * @param array $filters
+     * @param array $params
+     * @return LengthAwarePaginator
+     */
+    public static function index(
+        string $companyId, 
+        array $filters = [], 
+        array $params = []
+    ): LengthAwarePaginator
+    {
+        return IndexWhatsappNumberRepository::index($companyId, $filters, $params);
+    }
+
+    /**
      * Show a whatsapp number by id.
      *
-     * @param mixed $id
+     * @param string $companyId
+     * @param string $id
+     * @return WhatsappNumber|null
+     * @throws \Exception
+     */
+    public static function show(string $companyId, string $id): WhatsappNumber|null
+    {
+        return ShowWhatsappNumberRepository::show($companyId, $id);
+    }
+
+    /**
+     * Store a new whatsapp number.
+     *
+     * @param array $data
      * @return WhatsappNumber
      * @throws \Exception
      */
-    public static function show(string $id, string $company_id = null)
+    public static function store(array $data): WhatsappNumber
     {
-        try {
-            return WhatsappNumber::where('id', $id)
-                ->where('company_id', $company_id)
-                ->first();
-        } catch (\Exception $error) {
-            LogService::error($error->getMessage());
-            throw new \Exception("Error al buscar el número de whatsapp", 500);
-        }
+        return StoreWhatsappNumberRepository::store($data);
+    }
+
+    /**
+     * Update a whatsapp number.
+     *
+     * @param string $companyId
+     * @param string $id
+     * @param array $data
+     * @return bool|int
+     * @throws \Exception
+    */
+    public static function update(string $companyId, string $id, array $data): bool|int
+    {
+        return UpdateWhatsappNumberRepository::update($companyId, $id, $data);
+    }
+
+    /**
+     * Delete a whatsapp number.
+     *
+     * @param string $companyId
+     * @param string $id
+     * @return mixed
+     * @throws \Exception
+    */
+    public static function delete(string $companyId, string $id): mixed
+    {
+        return DeleteWhatsappNumberRepository::delete($companyId, $id);
     }
 }

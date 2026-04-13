@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class WhatsappMessage extends Model
 {
+    use HasFactory;
+    
     protected $table = 'whatsapp_messages';
     protected $primaryKey = 'id';
     public $keyType = 'string';
@@ -13,7 +16,8 @@ class WhatsappMessage extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'chat_id',
+        'company_id',
+        'whatsapp_chat_id',
         'type',
         'badge',
         'audio',
@@ -24,23 +28,36 @@ class WhatsappMessage extends Model
         'text',
         'video',
         'error',
+        'messages',
         'status'
     ];
 
     protected $casts = [
-        'audio' => 'array',
-        'contacts' => 'array',
-        'document' => 'array',
-        'image' => 'array',
-        'location' => 'array',
-        'text' => 'array',
-        'video' => 'array',
-        'error' => 'array'
+        'id' => 'string',
+        'company_id' => 'string',
+        'whatsapp_chat_id' => 'string',
+        'type' => 'string',
+        'badge' => 'string',
+        'audio' => 'string',
+        'contacts' => 'string',
+        'document' => 'string',
+        'image' => 'string',
+        'location' => 'string',
+        'text' => 'string',
+        'video' => 'string',
+        'error' => 'string',
+        'messages' => 'array',
+        'status' => 'string'
     ];
 
-    public function chat()
+    public function companyData()
     {
-        return $this->belongsTo(WhatsappChat::class, 'chat_id', 'id');
+        return $this->belongsTo(Company::class, 'company_id', 'id');
+    }
+
+    public function chatData()
+    {
+        return $this->belongsTo(WhatsappChat::class, 'whatsapp_chat_id', 'id');
     }
 
     protected static function boot()
