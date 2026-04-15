@@ -23,16 +23,14 @@ class WhatsappMessageService
      * 
      * @param Request $request
      * @param string $companyId
-     * @param string $whatsappChatId
      * @return LengthAwarePaginator
      */
     public static function index(
         Request $request, 
-        string $companyId, 
-        string $whatsappChatId
+        string $companyId
     ): LengthAwarePaginator
     {
-        return IndexWhatsappMessageService::index($request, $companyId, $whatsappChatId);
+        return IndexWhatsappMessageService::index($request, $companyId);
     }
 
     /**
@@ -40,17 +38,15 @@ class WhatsappMessageService
      * Obtener un mensaje de whatsapp específico de un chat para una empresa dada.
      * 
      * @param string $companyId
-     * @param string $whatsappChatId
      * @param string $id
      * @return WhatsappMessage|null
      */
     public static function show(
-        string $companyId, 
-        string $whatsappChatId, 
+        string $companyId,
         string $id
     ): WhatsappMessage|null
     {
-        return ShowWhatsappMessageService::show($companyId, $whatsappChatId, $id);
+        return ShowWhatsappMessageService::show($companyId, $id);
     }
 
      /**
@@ -59,16 +55,30 @@ class WhatsappMessageService
      * 
      * @param Request $request
      * @param string $companyId
-     * @param string $whatsappChatId
      * @return WhatsappMessage|null
     */
     public static function store(
         Request $request, 
-        string $companyId, 
-        string $whatsappChatId
+        string $companyId
     ): WhatsappMessage|null
     {
-        return StoreWhatsappMessageService::store($request, $companyId, $whatsappChatId);
+        return StoreWhatsappMessageService::store($request, $companyId);
+    }
+
+    /**
+     * Summary of send
+     * Enviar un nuevo mensaje de whatsapp en un chat específico para una empresa dada.
+     * 
+     * @param Request $request
+     * @param string $companyId
+     * @return void
+    */
+    public static function send(
+        Request $request, 
+        string $companyId
+    ): void
+    {
+        SendWhatsappMessageService::send($request, $companyId);
     }
 
     /**
@@ -77,18 +87,16 @@ class WhatsappMessageService
     * 
     * @param Request $request
     * @param string $companyId
-    * @param string $whatsappChatId
     * @param string $id
     * @return bool|int
     */
     public static function update(
         Request $request, 
-        string $companyId, 
-        string $whatsappChatId, 
+        string $companyId,
         string $id
     ): bool|int
     {
-        return UpdateWhatsappMessageService::update($request, $companyId, $whatsappChatId, $id);
+        return UpdateWhatsappMessageService::update($request, $companyId, $id);
     }
 
      /**
@@ -96,16 +104,14 @@ class WhatsappMessageService
      * Eliminar un mensaje de whatsapp específico de un chat para una empresa dada.
      * 
      * @param string $companyId
-     * @param string $whatsappChatId
      * @param string $id
      * @return void
      */
     public static function delete(
-        string $companyId, 
-        string $whatsappChatId, 
+        string $companyId,
         string $id
     ): void
     {
-        WhatsappMessageRepository::delete($companyId, $whatsappChatId, $id);
+        WhatsappMessageRepository::delete($companyId, $id);
     }
 }

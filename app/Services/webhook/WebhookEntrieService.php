@@ -2,15 +2,10 @@
 
 namespace App\Services\webhook;
 
-use App\Models\WhatsappChat;
-use App\Repositories\whatsapp_chats\WhatsappChatRepository;
-use App\Repositories\whatsapp_messages\WhatsappMessageRepository;
-use App\Repositories\whatsapp_numbers\WhatsappNumberRepository;
 use App\Services\logs\LogService;
 use App\Services\whatsapp_messages\WhatsappMessageService;
 use App\Services\whatsapp_numbers\WhatsappNumberService;
 use App\Services\whatsapp_chats\WhatsappChatService;
-use App\Services\messenger\SendWhatsappResponseService;
 use Illuminate\Http\Request;
 
 class WebhookEntrieService
@@ -51,8 +46,7 @@ class WebhookEntrieService
 
             $chatData = WhatsappChatService::store($request, $companyId);
             
-            WhatsappMessageService::store($request, $companyId, $chatData->id);
-            SendWhatsappResponseService::default($from, $phone_number_id, $api_key, $companyId);
+            WhatsappMessageService::store($request, $companyId);
             LogService::entries(json_encode($entry));
         });
     }

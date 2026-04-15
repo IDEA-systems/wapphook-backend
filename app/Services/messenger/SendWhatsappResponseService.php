@@ -24,25 +24,39 @@ class SendWhatsappResponseService
      * whatsapp_responses de la base de datos, y cada compañia debe tener
      * Un mensaje configurado como default
      * 
-     * @param mixed $from
+     * @param mixed $to
      * @param mixed $phone_number_id
      * @param mixed $api_key
      * @param mixed $companyId
      * @return void
      */
-    public static function default($from, $phone_number_id, $api_key, $companyId): void
+    public static function default($to, $phone_number_id, $api_key, $companyId): void
     {
         $defaultResponse = WhatsappResponseService::default($companyId);
 
         if ($defaultResponse) {
             $body = $defaultResponse->message;
-            SendWhatsappDefaultService::send($from, $api_key, $phone_number_id, $body);
+            SendWhatsappDefaultService::send($to, $api_key, $phone_number_id, $body);
         }
     }
 
-    public static function text($from, $phone_number_id, $api_key, $companyId): void
+    /**
+     * Summary of text
+     * 
+     * Enviar una respuesta de texto
+     * 
+     * @param mixed $phone_number_id
+     * @param mixed $api_key
+     * @param mixed $data
+     * @return void
+     */
+    public static function text(
+        string $phone_number_id, 
+        string $api_key, 
+        array $data
+    ): void
     {
-        // Este metodo se puede usar para enviar un mensaje de texto personalizado, sin necesidad de tenerlo configurado como default en la base de datos.
+        SendWhatsappTextService::send($api_key, $phone_number_id, $data);
     }
 
     public static function template($from, $phone_number_id, $api_key, $companyId): void

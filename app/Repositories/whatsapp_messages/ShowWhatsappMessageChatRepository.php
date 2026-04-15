@@ -22,20 +22,17 @@ class ShowWhatsappMessageChatRepository
      * Obtiene un mensaje de whatsapp específico de un chat para una empresa dada.
      * 
      * @param string $companyId
-     * @param string $whatsappChatId
      * @param string $id
      * @throws \Exception
      * @return WhatsappMessage|null
      */
     public static function show(
-        string $companyId, 
-        string $whatsappChatId, 
+        string $companyId,
         string $id
     ): WhatsappMessage|null
     {
         try {
             return WhatsappMessage::where('company_id', $companyId)
-                ->where('whatsapp_chat_id', $whatsappChatId)
                 ->where('id', $id)
                 ->first();
         } catch (\Exception $error) {

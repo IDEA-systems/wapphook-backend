@@ -23,10 +23,10 @@ class WhatsappMessageFactory extends Factory
         return [
             'company_id' => Company::inRandomOrder()->first()->id,
             'whatsapp_chat_id' => WhatsappChat::inRandomOrder()->first()->id,
-            'type' => $this->faker->randomElement(['text', 'image', 'video', 'audio', 'document']),
-            'badge' => $this->faker->randomElement(['input', 'output']),
+            'type' => 'text',
+            'badge' => 'input',
             'text' => $this->faker->text(),
-            'status' => $this->faker->randomElement(['read', 'unread']),
+            'status' => 'unread',
         ];
     }
 }

@@ -17,8 +17,7 @@ class IndexWhatsappMessageChatRepository
     }
 
     public static function index(
-        string $companyId, 
-        string $whatsappChatId, 
+        string $companyId,
         array $filters = [], 
         array $params = []
     ): LengthAwarePaginator
@@ -31,8 +30,11 @@ class IndexWhatsappMessageChatRepository
 
             $query = WhatsappMessage::query();
             
-            $query->where('company_id', $companyId)
-                ->where('whatsapp_chat_id', $whatsappChatId);
+            $query->where('company_id', $companyId);
+
+            if (isset($filters['whatsapp_chat_id'])) {
+                $query->where('whatsapp_chat_id', $filters['whatsapp_chat_id']);
+            }
 
             if (isset($filters['type'])) {
                 $query->where('type', $filters['type']);

@@ -21,18 +21,16 @@ class UpdateWhatsappMessageService
      * 
      * @param Request $request
      * @param string $companyId
-     * @param string $whatsappChatId
      * @param string $id
      * @return bool|int
      */
     public static function update(
         Request $request, 
-        string $companyId, 
-        string $whatsappChatId, 
+        string $companyId,
         string $id
     ): bool|int
     {
-        $messageData = WhatsappMessageRepository::show($companyId, $whatsappChatId, $id);
+        $messageData = WhatsappMessageRepository::show($companyId, $id);
 
         if (!$messageData) {
             throw new \Exception("El mensaje seleccionado no existe para la empresa y chat especificados.", 400);
@@ -90,7 +88,7 @@ class UpdateWhatsappMessageService
             ? $request->status : 
             $messageData->status;
             
-        return WhatsappMessageRepository::update($companyId, $whatsappChatId, $id, [
+        return WhatsappMessageRepository::update($companyId, $id, [
             'whatsapp_chat_id' => $whatsappChatId,
             'type' => $type,
             'badge' => $badge,

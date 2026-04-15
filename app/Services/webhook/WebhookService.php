@@ -3,6 +3,7 @@
 namespace App\Services\webhook;
 
 use App\Services\logs\LogService;
+use App\Services\verify_tokens\VerifytokenService;
 use Illuminate\Http\Request;
 
 class WebhookService
@@ -27,15 +28,23 @@ class WebhookService
      */
     public static function suscribe(Request $request, string $companyId)
     {
+
         $mode = $request->query('hub_mode');
         $challenge = $request->query('hub_challenge');
+        $verify_token = $request->query('hub_verify_token');
 
-        if (!$challenge || !$mode) {
-            throw new \Exception("Error al suscribir el webhook", 400);
+        if (!$challenge || !$mode || !$verify_token) {
+            throw new \Exception("Datos de suscripción incompletos", 400);
         }
 
         if ($mode !== 'subscribe') {
-            throw new \Exception("Error al suscribir el webhook", 400);
+            throw new \Exception("Modo de suscripción incorrecto", 400);
+        }
+
+        $webhookToken = VerifytokenService::show($companyId, $verify_token);
+        
+        if (!$webhookToken) {
+            throw new \Exception("Token de verificacion incorrecto", 400);
         }
 
         return $challenge;

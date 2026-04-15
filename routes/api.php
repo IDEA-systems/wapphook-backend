@@ -6,7 +6,7 @@ use App\Routes\WebhookRoutes;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('/v1')->group(function () {
-    WebhookRoutes::register();
     AuthenticationRoutes::register();
     ProtectedRoutes::register();
+    WebhookRoutes::register();
 });
