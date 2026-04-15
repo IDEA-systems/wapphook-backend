@@ -21,7 +21,8 @@ class WhatsappChatRoutes
 
     public static function register(): void
     {
-        Route::prefix('/{companyId}')->middleware([SessionCompanyMiddleware::class])
+        Route::prefix('/{companyId}')
+            ->middleware([SessionCompanyMiddleware::class])
             ->group(function() {
                 Route::middleware([WhatsappChatReadMiddleware::class])
                     ->get('/whatsapp-chats', [WhatsappChatController::class, 'index']);

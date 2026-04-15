@@ -18,10 +18,10 @@ class LogoutRoutes
 
     public static function register(): void
     {
-        Route::prefix('/{companyId}')->middleware([
-            SessionCompanyMiddleware::class
-        ])->group(function () {
-            Route::delete('/logout', [AuthenticationController::class, 'logout']);
-        });
+        Route::prefix('/{companyId}')
+            ->middleware([SessionCompanyMiddleware::class])
+            ->group(function () {
+                Route::delete('/logout', [AuthenticationController::class, 'logout']);
+            });
     }
 }
