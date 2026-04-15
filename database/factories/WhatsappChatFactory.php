@@ -3,13 +3,14 @@
 namespace Database\Factories;
 
 use App\Models\Company;
-use App\Models\MetaApp;
+use App\Models\WhatsappChat;
+use App\Models\WhatsappNumber;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<MetaApp>
+ * @extends Factory<WhatsappChat>
  */
-class MetaAppFactory extends Factory
+class WhatsappChatFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -20,8 +21,9 @@ class MetaAppFactory extends Factory
     {
         return [
             "id" => $this->faker->uuid(),
-            "company_id" => Company::inRandomOrder()->first()->id,
-            "name" => $this->faker->name()
+            'whatsapp_number_id' => WhatsappNumber::inRandomOrder()->first()->id,
+            'company_id' => Company::inRandomOrder()->first()->id,
+            'from' => $this->faker->phoneNumber(),
         ];
     }
 }

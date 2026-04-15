@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Company;
-use App\Models\MetaApp;
+use App\Models\Application;
 use App\Models\VerifyToken;
 use App\Models\WhatsappAccount;
 use App\Models\WhatsappNumber;
@@ -17,11 +17,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Company::factory()->count(1)->create();
-        // MetaApp::factory()->count(1)->create();
-        // WhatsappAccount::factory()->count(1)->create();
-        // WhatsappNumber::factory()->count(1)->create();
-        // VerifyToken::factory()->count(1)->create();
+        Company::factory()->count(1)->create();
+        Application::factory()->count(1)->create();
+        WhatsappAccount::factory()->count(1)->create();
+        WhatsappNumber::factory()->count(1)->create();
+        VerifyToken::factory()->count(1)->create();
         WhatsappResponse::factory()->count(1)->create();
     }
 }

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('whatsapp_account_id');
             $table->string('name_visible')->unique();
             $table->string('phone_number')->unique();
-            $table->string('api_key')->unique();
+            $table->longText('api_key');
             $table->string('pin')->nullable();
             $table->timestamps();
 

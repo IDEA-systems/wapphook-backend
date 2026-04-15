@@ -15,14 +15,25 @@ class ShowWhatsappChatRepository
         //
     }
 
-    public static function show(string $id, string $company_id)
+    /**
+     * Summary of show
+     * 
+     * Busca un chat de whatsapp específico por su ID y el ID de la empresa a la que pertenece.
+     * 
+     * @param string $companyId
+     * @param string $id
+     * @throws \Exception
+     * @return WhatsappChat|null
+     */
+    public static function show(string $companyId, string $id): WhatsappChat|null
     {
         try {
-            return WhatsappChat::where("id", $id)
-                ->where("company_id", $company_id)
+            return WhatsappChat::where('company_id', $companyId)
+                ->where('id', $id)
                 ->first();
         } catch (\Exception $error) {
-            LogService::error($error->getMessage());
+            $message = $error->getMessage();
+            LogService::error("ShowWhatsappChatRepository@show: $message");
             throw new \Exception("Error al buscar el chat", 500);
         }
     }

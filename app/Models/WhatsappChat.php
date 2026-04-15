@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class WhatsappChat extends Model
 {
     use HasFactory;
+    
     protected $table = 'whatsapp_chats';
     protected $primaryKey = 'id';
     protected $keyType = 'string';
@@ -38,13 +39,18 @@ class WhatsappChat extends Model
         'status' => 'string',
     ];
 
-    public function number()
+    public function whatsappNumberData()
     {
         return $this->belongsTo(WhatsappNumber::class, 'whatsapp_number_id', 'id');
     }
 
-    public function company()
+    public function companyData()
     {
         return $this->belongsTo(Company::class, 'company_id', 'id');
+    }
+
+    public function messages()
+    {
+        return $this->hasMany(WhatsappMessage::class, 'whatsapp_chat_id', 'id');
     }
 }

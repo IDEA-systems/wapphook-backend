@@ -15,10 +15,10 @@ class ShowWhatsappResponseRepository
         //
     }
 
-    public static function default(string $company_id)
+    public static function default(string $companyId)
     {
         try {
-            return WhatsappResponse::where("company_id", $company_id)
+            return WhatsappResponse::where("company_id", $companyId)
                 ->where("default", true)
                 ->first();
         } catch (\Exception $error) {

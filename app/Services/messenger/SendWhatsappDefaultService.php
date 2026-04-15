@@ -2,7 +2,6 @@
 
 namespace App\Services\messenger;
 
-use App\Services\whatsapp_responses\WhatsappResponseService;
 use App\Services\logs\LogService;
 use App\Support\ConstantSupport;
 use GuzzleHttp\Client;
@@ -38,21 +37,18 @@ class SendWhatsappDefaultService
      * 
      * @param string $from
      * @param string $api_key
-     * @param string $company_id
+     * @param string $companyId
      * @param string $phone_number_id
      * @throws \Exception
      * @return void
      */
-    public static function send(
-        string $from, 
-        string $api_key,
-        string $phone_number_id,
-        string $body
-    ) {
+    public static function send( string $from,  string $api_key, string $phone_number_id, string $body): void 
+    {
         try {
+
             $API_URL = ConstantSupport::graphURL();
 
-            $PHONE = $from; //self::formatPhoneNumber($from);
+            $PHONE = self::formatPhoneNumber($from);
 
             $GRAPH_URL = "{$API_URL}/{$phone_number_id}/messages";
             
@@ -78,12 +74,13 @@ class SendWhatsappDefaultService
             ]);
 
             $jsonResponse = $response->getBody()->getContents();
-
-            // // Log del mensaje de respuesta enviado
             LogService::output($jsonResponse);
+
         } catch (\Exception $error) {
+
             LogService::error($error->getMessage());
             throw new \Exception("Error al enviar el mensaje por WhatsApp");
+
         }
     }
 }

@@ -20,12 +20,12 @@ class WhatsappNumberFactory extends Factory
     public function definition(): array
     {
         return [
-            'id' => $this->faker->unique(),
+            'id' => "1062084873645197",
             'company_id' => Company::inRandomOrder()->first()->id,
             'whatsapp_account_id' => WhatsappAccount::inRandomOrder()->first()->id,
             'name_visible' => $this->faker->firstNameFemale(),
             'phone_number' => $this->faker->phoneNumber(),
-            'api_key' => $this->faker->randomKey(),
+            'api_key' => $this->faker->uuid(),
             'pin' => $this->faker->randomNumber()
         ];
     }

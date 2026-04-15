@@ -2,11 +2,11 @@
 
 namespace App\Services\whatsapp_messages;
 
-use Illuminate\Http\Request;
 use App\Models\WhatsappMessage;
-use App\Interfaces\StoreWhatsappMessageInterface;
+use App\Support\ConstantSupport;
+use Illuminate\Http\Request;
 
-class StoreWhatsappMessageService implements StoreWhatsappMessageInterface
+class StoreWhatsappMessageService
 {
     /**
      * Create a new class instance.
@@ -16,8 +16,13 @@ class StoreWhatsappMessageService implements StoreWhatsappMessageInterface
         //
     }
 
-    public static function store(Request $request, string $company_id): WhatsappMessage
+    public static function store(
+        Request $request, 
+        string $companyId, 
+        string $whatsappChatId
+    ): WhatsappMessage
     {
+        $text = ConstantSupport::messageText();
         $entry = $request->entry[0];
         $changes = $entry["changes"][0];
         $value = $changes["value"];
@@ -25,8 +30,8 @@ class StoreWhatsappMessageService implements StoreWhatsappMessageInterface
         $type = $messages["type"];
 
         return match ($type) {
-            "text" => StoreWhatsappMessageTextService::store($request, $company_id),
-            default => throw new \Exception("Tipo de mensaje no soportado: $type", 400)
+            $text => StoreWhatsappMessageTextService::store($request, $companyId, $whatsappChatId),
+            default => throw new \Exception("Tipo de mensaje desconocido", 400)
         };
     }
 }

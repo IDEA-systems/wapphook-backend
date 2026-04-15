@@ -39,6 +39,6 @@ class LogService
     public static function error($message)
     {
         \Log::channel('errors')
-            ->error($message);
+            ->error("Error registrado:\n{$message}\n");
     }
 }

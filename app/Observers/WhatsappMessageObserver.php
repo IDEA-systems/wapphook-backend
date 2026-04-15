@@ -3,7 +3,6 @@
 namespace App\Observers;
 
 use App\Models\WhatsappMessage;
-use App\Services\logs\LogService;
 
 class WhatsappMessageObserver
 {
@@ -12,8 +11,7 @@ class WhatsappMessageObserver
      */
     public function created(WhatsappMessage $whatsappMessage): void
     {
-        $data = json_encode($whatsappMessage);
-        LogService::activity($data);
+        WhatsappMessageObserverProcess::create($whatsappMessage);
     }
 
     /**

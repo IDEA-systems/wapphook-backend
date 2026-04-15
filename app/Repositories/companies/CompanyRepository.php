@@ -4,6 +4,7 @@ namespace App\Repositories\companies;
 
 use App\Models\Company;
 use App\Services\logs\LogService;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class CompanyRepository
 {
@@ -16,19 +17,66 @@ class CompanyRepository
     }
 
     /**
-     * Show a company by id.
-     *
-     * @param mixed $company_id
+     * Summary of index
+     * Obtiene una lista de todas las compañías.
+     * 
+     * @return LengthAwarePaginator
+     */
+    public static function index() : LengthAwarePaginator
+    {
+        return IndexCompanyRepository::index();
+    }
+
+    /**
+     * Summary of show
+     * Obtiene los datos de una compañía por su ID.
+     * 
+     * @param string $id
+     * @throws \Exception
      * @return Company|null
+     */
+    public static function show(string $id) : Company|null
+    {
+        return ShowCompanyRepository::show($id);
+    }
+
+    /**
+     * Store a company.
+     * Agrega una nueva compañía a la base de datos con los datos proporcionados.
+     *
+     * @param array $data
+     * @return Company
      * @throws \Exception
      */
-    public static function show(string $company_id)
+    public static function store(array $data) : Company
     {
-        try {
-            return Company::find($company_id);
-        } catch (\Exception $error) {
-            LogService::error($error->getMessage());
-            throw new \Exception("Error al buscar la compañía", 500);
-        }
+        return StoreCompanyRepository::store($data);
+    }
+
+    /**
+     * Summary of update
+     * Actualiza una compañía por su ID con los datos proporcionados.
+     * 
+     * @param string $id
+     * @param array $data
+     * @throws \Exception
+     * @return bool|int
+     */
+    public static function update(string $id, array $data)
+    {
+        return UpdateCompanyRepository::update($id, $data);
+    }
+
+    /**
+     * Summary of delete
+     * Elimina una compañía por su ID.
+     * 
+     * @param string $id
+     * @throws \Exception
+     * @return void
+     */
+    public static function delete(string $id): void
+    {
+        DeleteCompanyRepository::delete($id);
     }
 }

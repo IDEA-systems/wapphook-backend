@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class WhatsappAccount extends Model
 {
     use HasFactory;
+    
     protected $table = 'whatsapp_accounts';
     protected $primaryKey = 'id';
     protected $keyType = 'string';
@@ -22,7 +23,7 @@ class WhatsappAccount extends Model
     protected $fillable = [
         'id',
         'company_id',
-        'meta_app_id',
+        'application_id',
         'name',
     ];
 
@@ -34,23 +35,31 @@ class WhatsappAccount extends Model
     protected $casts = [
         'id' => 'string',
         'company_id' => 'string',
-        'meta_app_id' => 'string',
+        'application_id' => 'string',
         'name' => 'string',
     ];
 
     /**
      * Get the company that owns the WhatsApp account.
      */
-    public function company()
+    public function companyData()
     {
         return $this->belongsTo(Company::class, 'company_id', 'id');
     }
 
     /**
-     * Get the MetaApp associated with the WhatsApp account.
+     * Get the Application associated with the WhatsApp account.
      */
-    public function metaApp()
+    public function applicationData()
     {
-        return $this->belongsTo(MetaApp::class, 'meta_app_id', 'id');
+        return $this->belongsTo(Application::class, 'application_id', 'id');
+    }
+
+    /**
+    * Get the WhatsApp numbers associated with the WhatsApp account.
+    */
+    public function whatsappNumbers()
+    {
+        return $this->hasMany(WhatsappNumber::class, 'whatsapp_account_id', 'id');
     }
 }

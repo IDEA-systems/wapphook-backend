@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Company;
-use App\Models\MetaApp;
+use App\Models\Application;
 use App\Models\VerifyToken;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,9 +20,8 @@ class VerifyTokenFactory extends Factory
     public function definition(): array
     {
         return [
-            'id' => $this->faker->unique(),
             'company_id' => Company::inRandomOrder()->first()->id,
-            'meta_app_id' => MetaApp::inRandomOrder()->first()->id,
+            'application_id' => Application::inRandomOrder()->first()->id,
         ];
     }
 }

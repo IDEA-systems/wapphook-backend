@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('whatsapp_messages', function (Blueprint $table) {
             $table->string('id')->primary();
-            $table->string('chat_id');
+            $table->string('company_id');
+            $table->string('whatsapp_chat_id');
 
             $table->enum('type', ['text','image','video','audio','document','contacts','location', 'error'])
                 ->nullable()
@@ -23,35 +24,39 @@ return new class extends Migration
                 ->nullable()
                 ->default('input');
 
-            $table->json('audio')
+            $table->string('audio')
                 ->nullable()
                 ->default(null);
 
-            $table->json('contacts')
+            $table->string('contacts')
                 ->nullable()
                 ->default(null);
 
-            $table->json('document')
+            $table->string('document')
                 ->nullable()
                 ->default(null);
 
-            $table->json('image')
+            $table->string('image')
                 ->nullable()
                 ->default(null);
 
-            $table->json('location')
+            $table->string('location')
                 ->nullable()
                 ->default(null);
 
-            $table->json('text')
+            $table->string('text')
                 ->nullable()
                 ->default(null);
 
-            $table->json('video')
+            $table->string('video')
                 ->nullable()
                 ->default(null);
 
-            $table->json('error')
+            $table->string('error')
+                ->nullable()
+                ->default(null);
+
+            $table->json('messages')
                 ->nullable()
                 ->default(null);
 
@@ -61,7 +66,13 @@ return new class extends Migration
 
             $table->timestamps();
 
-            $table->foreign('chat_id')
+            $table->foreign('company_id')
+                ->references('id')
+                ->on('companies')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
+            $table->foreign('whatsapp_chat_id')
                 ->references('id')
                 ->on('whatsapp_chats')
                 ->onDelete('cascade')

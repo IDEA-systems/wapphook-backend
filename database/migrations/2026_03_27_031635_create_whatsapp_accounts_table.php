@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('whatsapp_accounts', function (Blueprint $table) {
             $table->string('id')->primary();
             $table->string('company_id');
-            $table->string('meta_app_id')->nullable();
+            $table->string('application_id')->nullable();
             $table->string('name')->unique();
             $table->timestamps();
 
@@ -24,9 +24,9 @@ return new class extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
-            $table->foreign('meta_app_id')
+            $table->foreign('application_id')
                 ->references('id')
-                ->on('meta_apps')
+                ->on('applications')
                 ->onDelete('set null')
                 ->onUpdate('cascade');
         });

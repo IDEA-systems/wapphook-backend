@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Company;
-use App\Models\MetaApp;
+use App\Models\Application;
 use App\Models\WhatsappAccount;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,9 +20,9 @@ class WhatsappAccountFactory extends Factory
     public function definition(): array
     {
         return [
-            'id' => $this->faker->unique(),
+            'id' => "1676958460334899",
             'company_id' => Company::inRandomOrder()->first()->id,
-            'meta_app_id' => MetaApp::inRandomOrder()->first()->id,
+            'application_id' => Application::inRandomOrder()->first()->id,
             'name' => $this->faker->firstName,
         ];
     }

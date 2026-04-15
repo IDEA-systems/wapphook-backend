@@ -27,26 +27,25 @@ class SendWhatsappResponseService
      * @param mixed $from
      * @param mixed $phone_number_id
      * @param mixed $api_key
-     * @param mixed $company_id
+     * @param mixed $companyId
      * @return void
      */
-    public static function default($from, $phone_number_id, $api_key, $company_id)
+    public static function default($from, $phone_number_id, $api_key, $companyId): void
     {
-        $defaultResponse = WhatsappResponseService::default($company_id);
+        $defaultResponse = WhatsappResponseService::default($companyId);
 
         if ($defaultResponse) {
             $body = $defaultResponse->message;
-
             SendWhatsappDefaultService::send($from, $api_key, $phone_number_id, $body);
         }
     }
 
-    public static function text($from, $phone_number_id, $api_key, $company_id)
+    public static function text($from, $phone_number_id, $api_key, $companyId): void
     {
         // Este metodo se puede usar para enviar un mensaje de texto personalizado, sin necesidad de tenerlo configurado como default en la base de datos.
     }
 
-    public static function template($from, $phone_number_id, $api_key, $company_id)
+    public static function template($from, $phone_number_id, $api_key, $companyId): void
     {
         // Este metodo se puede usar para enviar un mensaje con plantilla, utilizando la API de Facebook Graph.
     }
