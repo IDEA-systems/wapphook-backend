@@ -100,8 +100,7 @@ class WhatsappMessageTest extends TestCase
 
         $results = WhatsappMessageService::index(
             $request,
-            $company->id,
-            $whatsappChat->id
+            $company->id
         );
 
         echo "Messages\n".json_encode($results)."\n";
@@ -161,8 +160,7 @@ class WhatsappMessageTest extends TestCase
 
         $result = WhatsappMessageService::show(
             $company->id, 
-            //"455446545465", Usar un chat_id que no existe para probar la excepción 
-            $whatsappChat->id,
+            //"455446545465", Usar un chat_id que no existe para probar la excepción
             $whatsappMessage->id
         );
 
@@ -248,7 +246,7 @@ class WhatsappMessageTest extends TestCase
             ]
         ]);
 
-        $result = WhatsappMessageService::store($request, $company->id, $whatsappChat->id);
+        $result = WhatsappMessageService::store($request, $company->id);
 
         echo "Store message\n".json_encode($result)."\n";
         $this->assertIsObject($result);
@@ -315,7 +313,7 @@ class WhatsappMessageTest extends TestCase
         // $this->expectExceptionCode(400);
 
         // Actualizar el mensaje a leído
-        $result = WhatsappMessageService::update($request, $company->id, $whatsappChat->id, $whatsappMessage->id);
+        $result = WhatsappMessageService::update($request, $company->id, $whatsappMessage->id);
 
         echo "Update message\n".json_encode($result)."\n";
         $this->assertIsInt($result);
@@ -373,7 +371,7 @@ class WhatsappMessageTest extends TestCase
         // $this->expectExceptionCode(400);
 
         // Eliminar el mensaje
-        WhatsappMessageService::delete($company->id, $whatsappChat->id, $whatsappMessage->id);
+        WhatsappMessageService::delete($company->id, $whatsappMessage->id);
 
         echo "Delete message\n";
         $this->assertTrue(true);

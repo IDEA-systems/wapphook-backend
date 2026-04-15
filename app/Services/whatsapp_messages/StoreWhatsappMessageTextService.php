@@ -18,8 +18,7 @@ class StoreWhatsappMessageTextService
 
     public static function store(
         Request $request, 
-        string $companyId, 
-        string $whatsappChatId
+        string $companyId
     ): WhatsappMessage
     {
         $entry = $request->entry[0];
@@ -29,6 +28,7 @@ class StoreWhatsappMessageTextService
         $type = $messages["type"];
         $from = $messages["from"];
         $text = $messages["text"]["body"];
+        $whatsappChatId = "CHAT-$from";
 
         return WhatsappMessageRepository::store([
             "company_id" => $companyId,

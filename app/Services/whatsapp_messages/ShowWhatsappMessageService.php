@@ -20,17 +20,15 @@ class ShowWhatsappMessageService
      * Obtiene un mensaje de whatsapp específico de un chat para una empresa dada.
      * 
      * @param string $companyId
-     * @param string $whatsappChatId
      * @param string $id
      * @return WhatsappMessage|null
      */
     public static function show(
         string $companyId, 
-        string $whatsappChatId, 
         string $id
     ): WhatsappMessage|null
     {
-        $messageData = WhatsappMessageRepository::show($companyId, $whatsappChatId, $id);
+        $messageData = WhatsappMessageRepository::show($companyId, $id);
 
          if (!$messageData) {
             throw new \Exception("El mensaje seleccionado no existe", 400);

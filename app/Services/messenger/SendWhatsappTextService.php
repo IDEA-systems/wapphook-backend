@@ -6,7 +6,8 @@ use App\Services\logs\LogService;
 use App\Support\ConstantSupport;
 use GuzzleHttp\Client;
 
-class SendWhatsappDefaultService
+
+class SendWhatsappTextService
 {
     /**
      * Create a new class instance.
@@ -16,51 +17,32 @@ class SendWhatsappDefaultService
         //
     }
 
-    // Solo usar en ambitos de pruebas, para formatear el numero de telefono y evitar errores al enviar mensajes.
-    public static function formatPhoneNumber(string $phoneNumber): string
-    {
-        // Eliminar cualquier caracter que no sea un numero
-        $formattedNumber = preg_replace('/\D/', '', $phoneNumber);
-
-        // Asegurarse de que el numero comience con 52
-        if (str_starts_with($formattedNumber, '521')) {
-            $formattedNumber = '52' . substr($formattedNumber, 3);
-        }
-
-        return $formattedNumber;
-    }
-
     /**
      * Summary of send
+     * Enviar un mensaje de texto por WhatsApp utilizando la API de Facebook.
      * 
-     * Enviar un mensaje por WhatsApp utilizando la API de Facebook Graph
+     * Cuando la app esta en prueba el numero de telefono no puede comenzar con el 521 en mexico
+     * Por lo que para hacer las pruebas, procura que en la @param $data el parametro "to" 
+     * tenga un numero de telefono solo con el 52 al inicio, ejemplo: 529971273591 en lugar de 5219371273591
      * 
-     * @param string $to
      * @param string $api_key
      * @param string $phone_number_id
-     * @param string $body
-     * @throws \Exception
+     * @param array $data
      * @return void
      */
-    public static function send( string $to,  string $api_key, string $phone_number_id, string $body): void 
+    public static function send(
+        string $api_key,
+        string $phone_number_id, 
+        array $data
+    ): void
     {
         try {
             $API_URL = ConstantSupport::graphURL();
-
             $GRAPH_URL = "{$API_URL}/{$phone_number_id}/messages";
             
             $headers = [
                 "Content-Type" => "application/json",
                 "Authorization" => "Bearer {$api_key}"
-            ];
-
-            $data = [
-                "messaging_product" => "whatsapp",
-                "to" => self::formatPhoneNumber($to),
-                "type" => "text",
-                "text" => [
-                    "body" => $body
-                ]
             ];
 
             $fetch = new Client();

@@ -20,19 +20,17 @@ class WhatsappMessageRepository
      * Obtiene un mensaje de whatsapp específico de un chat para una empresa dada.
      * 
      * @param string $companyId
-     * @param string $whatsappChatId
      * @param array $filters
      * @param array $params
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     public static function index(
-        string $companyId, 
-        string $whatsappChatId, 
+        string $companyId,
         array $filters = [], 
         array $params = []
     ): LengthAwarePaginator
     {
-        return IndexWhatsappMessageChatRepository::index($companyId, $whatsappChatId, $filters, $params);
+        return IndexWhatsappMessageChatRepository::index($companyId, $filters, $params);
     }
 
     /**
@@ -40,17 +38,15 @@ class WhatsappMessageRepository
      * Obtiene un mensaje de whatsapp específico de un chat para una empresa dada.
      * 
      * @param string $companyId
-     * @param string $whatsappChatId
      * @param string $id
      * @return WhatsappMessage|null
      */
     public static function show(
-        string $companyId, 
-        string $whatsappChatId, 
+        string $companyId,
         string $id
     ): WhatsappMessage|null
     {
-        return ShowWhatsappMessageChatRepository::show($companyId, $whatsappChatId, $id);
+        return ShowWhatsappMessageChatRepository::show($companyId, $id);
     }
 
     /**
@@ -73,15 +69,18 @@ class WhatsappMessageRepository
      * Actualiza un mensaje de whatsapp específico de un chat para una empresa dada.
      * 
      * @param string $companyId
-     * @param string $whatsappChatId
      * @param string $id
      * @param array $data
      * @throws \Exception
      * @return void
      */
-    public static function update(string $companyId, string $whatsappChatId, string $id, array $data): bool|int
+    public static function update(
+        string $companyId, 
+        string $id, 
+        array $data
+    ): bool|int
     {
-        return UpdateWhatsappMessageChatRepository::update($companyId, $whatsappChatId, $id, $data);
+        return UpdateWhatsappMessageChatRepository::update($companyId, $id, $data);
     }
 
     /**
@@ -90,19 +89,21 @@ class WhatsappMessageRepository
      * Elimina un mensaje de whatsapp específico de un chat para una empresa dada.
      * 
      * @param string $companyId
-     * @param string $whatsappChatId
      * @param string $id
      * @throws \Exception
      * @return void
      */
-    public static function delete(string $companyId, string $whatsappChatId, string $id): void
+    public static function delete(
+        string $companyId, 
+        string $id
+    ): void
     {
-        $whatsappMessage = ShowWhatsappMessageChatRepository::show($companyId, $whatsappChatId, $id);
+        $whatsappMessage = ShowWhatsappMessageChatRepository::show($companyId, $id);
 
         if (!$whatsappMessage) {
             throw new \Exception("El mensaje seleccionado no existe para la empresa y chat especificados.", 400);
         }
 
-        DeleteWhatsappMessageChatRepository::delete($companyId, $whatsappChatId, $id);
+        DeleteWhatsappMessageChatRepository::delete($companyId, $id);
     }
 }
