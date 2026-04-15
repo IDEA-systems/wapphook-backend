@@ -2,11 +2,11 @@
 
 namespace App\Services\webhook;
 
+use App\Support\ConstantSupport;
 use Illuminate\Http\Request;
 use App\Services\logs\LogService;
 use App\Services\whatsapp_chats\WhatsappChatService;
 use App\Services\whatsapp_messages\WhatsappMessageService;
-use App\Repositories\whatsapp_numbers\WhatsappNumberRepository;
 
 class WebhookEntrieService
 {
@@ -32,22 +32,15 @@ class WebhookEntrieService
     public static function process(Request $request, string $companyId): void
     {
         \DB::transaction(function () use ($request, $companyId) {
-            $entry = $request->entry[0];
-            $changes = $entry["changes"][0];
-            $value = $changes["value"];
-            $metadata = $value["metadata"];
-            $messages = $value["messages"][0];
-            $phone_number_id = $metadata["phone_number_id"];
+            $modeMessage = ConstantSupport::badgeInput();
+            
+            $whatsappChatData = WhatsappChatService::store($request, $companyId, $modeMessage);
 
-            $whatsappNumberData = WhatsappNumberRepository::show($companyId, $phone_number_id);
+            $whatsappchatId = $whatsappChatData->id;
 
-            if (!$whatsappNumberData) {
-                throw new \Exception("El número seleccionado no existe", 400);
-            }
+            $whatsappMessageData = WhatsappMessageService::store($request, $companyId, $whatsappchatId, $modeMessage);
 
-            WhatsappChatService::store($request, $companyId);
-            WhatsappMessageService::store($request, $companyId, "input");
-            LogService::entries(json_encode($entry));
+            LogService::entries(json_encode($whatsappMessageData));
         });
     }
 }

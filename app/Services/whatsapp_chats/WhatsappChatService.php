@@ -2,6 +2,7 @@
 
 namespace App\Services\whatsapp_chats;
 
+use App\Support\ConstantSupport;
 use Illuminate\Http\Request;
 use App\Models\WhatsappChat;
 use App\Models\WhatsappMessage;
@@ -107,14 +108,23 @@ class WhatsappChatService
      * 
      * @param Request $request
      * @param string $companyId
+     * @param string $mode
      * @return WhatsappChat
      */
     public static function store(
         Request $request, 
-        string $companyId
+        string $companyId,
+        string $mode
     ): WhatsappChat
     {
-        return StoreWhatsappChatService::store($request, $companyId);
+        $input = ConstantSupport::badgeInput();
+        $output = ConstantSupport::badgeOutput();
+        
+        return match ($mode) {
+            $input => StoreWhatsappChatService::input($request, $companyId),
+            $output => StoreWhatsappChatService::output($request, $companyId),
+            default => throw new \Exception("Modo de creación de chat desconocido", 400)
+        };
     }
 
     /**
