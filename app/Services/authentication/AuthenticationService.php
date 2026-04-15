@@ -30,16 +30,10 @@ class AuthenticationService
      * Handle the logout process.
      *
      * @param Request $request
-     * @param string $companyId
-     * @param string $userId
      * @return void
      */
-    public static function logout(
-        Request $request, 
-        string $companyId, 
-        string $userId
-    ): void
+    public static function logout(Request $request): void
     {
-        LogoutService::logout($request, $companyId, $userId);
+        LogoutService::logout($request);
     }
 }

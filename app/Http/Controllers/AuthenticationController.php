@@ -27,13 +27,14 @@ class AuthenticationController extends Controller
                 'data' => $loginData,
             ]);
         } catch (\Exception $error) {
+            $code = $error->getCode() ?: 500;
             $message = $error->getMessage();
             LogService::error("AuthenticationController@login: $message");
 
             return response()->json([
                 'name' => "LoginError",
                 'message' => $message,
-            ], 500);
+            ], $code);
         }
     }
 
@@ -42,31 +43,26 @@ class AuthenticationController extends Controller
      * Destruir una session iniciada de un usuario
      *
      * @param Request $request
-     * @param string $companyId
-     * @param string $userId
      * @return JsonResponse
      */
-    public static function logout(
-        Request $request, 
-        string $companyId, 
-        string $userId
-    ): JsonResponse
+    public static function logout(Request $request): JsonResponse
     {
         try {
-            AuthenticationService::logout($request, $companyId, $userId);
+            AuthenticationService::logout($request);
 
             return response()->json([
                 'title' => 'Logout successful',
                 'details' => 'The user has been logged out successfully.',
             ]);
         } catch (\Exception $error) {
+            $code = $error->getCode() ?: 500;
             $message = $error->getMessage();
             LogService::error("AuthenticationController@logout: $message");
 
             return response()->json([
                 'name' => "LogoutError",
                 'message' => $message,
-            ], 500);
+            ], $code);
         }
     }
 }

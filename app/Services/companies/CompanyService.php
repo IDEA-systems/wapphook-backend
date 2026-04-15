@@ -18,11 +18,11 @@ class CompanyService
      * Summary of show
      * Lógica para buscar una compañía por su ID
      * 
-     * @param mixed $companyId
+     * @param string $companyId
      * @throws \Exception
      * @return \App\Models\Company
      */
-    public static function show($companyId)
+    public static function show(string $companyId)
     {
         $company = CompanyRepository::show($companyId);
 
