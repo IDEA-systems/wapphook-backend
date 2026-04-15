@@ -16,7 +16,7 @@ class StoreWhatsappMessageService
         //
     }
 
-    public static function store(
+    public static function input(
         Request $request, 
         string $companyId
     ): WhatsappMessage
@@ -29,7 +29,22 @@ class StoreWhatsappMessageService
         $type = $messages["type"];
 
         return match ($type) {
-            $text => StoreWhatsappMessageTextService::store($request, $companyId),
+            $text => StoreInputWhatsappMessageTextService::store($request, $companyId),
+            default => throw new \Exception("Tipo de mensaje desconocido", 400)
+        };
+    }
+
+    public static function output(
+        Request $request, 
+        string $companyId
+    ): WhatsappMessage
+    {
+        $text = ConstantSupport::messageText();
+        $messages = $request->post('messages');
+        $type = $messages["type"];
+
+        return match ($type) {
+            $text => StoreOutputWhatsappMessageTextService::store($request, $companyId),
             default => throw new \Exception("Tipo de mensaje desconocido", 400)
         };
     }

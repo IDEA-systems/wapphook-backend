@@ -2,10 +2,11 @@
 
 namespace App\Services\whatsapp_messages;
 
-use App\Models\WhatsappMessage;
-use App\Repositories\whatsapp_messages\WhatsappMessageRepository;
+use App\Support\ConstantSupport;
 use Illuminate\Http\Request;
+use App\Models\WhatsappMessage;
 use Illuminate\Pagination\LengthAwarePaginator;
+use App\Repositories\whatsapp_messages\WhatsappMessageRepository;
 
 class WhatsappMessageService
 {
@@ -59,10 +60,18 @@ class WhatsappMessageService
     */
     public static function store(
         Request $request, 
-        string $companyId
+        string $companyId,
+        string $mode = "input"
     ): WhatsappMessage|null
     {
-        return StoreWhatsappMessageService::store($request, $companyId);
+        $input = ConstantSupport::badgeInput();
+        $output = ConstantSupport::badgeOutput();
+
+        return match($mode) {
+            $input => StoreWhatsappMessageService::input($request, $companyId),
+            $output => StoreWhatsappMessageService::output($request, $companyId),
+            default => throw new \Exception("Modo de mensaje desconocido", 400)
+        };
     }
 
     /**

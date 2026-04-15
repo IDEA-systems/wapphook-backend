@@ -3,7 +3,7 @@
 namespace App\Routes;
 
 use App\Http\Controllers\AuthenticationController;
-use App\Http\Middleware\CompanyMiddleware;
+use App\Http\Middleware\SessionCompanyMiddleware;
 use Illuminate\Support\Facades\Route;
 
 class LogoutRoutes
@@ -18,7 +18,10 @@ class LogoutRoutes
 
     public static function register(): void
     {
-        Route::middleware([CompanyMiddleware::class])
-            ->delete('/logout/{userId}', [AuthenticationController::class, 'logout']);
+        Route::prefix('/{companyId}')->middleware([
+            SessionCompanyMiddleware::class
+        ])->group(function () {
+            Route::delete('/logout', [AuthenticationController::class, 'logout']);
+        });
     }
 }

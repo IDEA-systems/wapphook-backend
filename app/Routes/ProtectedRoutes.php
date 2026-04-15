@@ -17,12 +17,10 @@ class ProtectedRoutes
     public static function register(): void
     {
         // Rutas protegidas por autenticación
-        Route::middleware('auth:sanctum')
-            ->prefix('/{companyId}')
-            ->group(function () {
-                LogoutRoutes::register();
-                WhatsappChatRoutes::register();
-                WhatsappMessagesRoutes::register();
-            });
+        Route::middleware('auth:sanctum')->group(function () {
+            LogoutRoutes::register();
+            WhatsappChatRoutes::register();
+            WhatsappMessagesRoutes::register();
+        });
     }
 }

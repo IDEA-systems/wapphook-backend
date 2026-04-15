@@ -87,6 +87,10 @@ class UpdateWhatsappMessageService
         $status = isset($request->status) 
             ? $request->status : 
             $messageData->status;
+
+        $sent_by = isset($request->sent_by) 
+            ? $request->sent_by : 
+            $messageData->sent_by;
             
         return WhatsappMessageRepository::update($companyId, $id, [
             'whatsapp_chat_id' => $whatsappChatId,
@@ -102,6 +106,7 @@ class UpdateWhatsappMessageService
             'error' => $error,
             'messages' => $messages,
             'status' => $status,
+            'sent_by' => $sent_by
         ]);
     }
 }

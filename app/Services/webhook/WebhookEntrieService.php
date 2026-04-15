@@ -2,11 +2,11 @@
 
 namespace App\Services\webhook;
 
-use App\Services\logs\LogService;
-use App\Services\whatsapp_messages\WhatsappMessageService;
-use App\Services\whatsapp_numbers\WhatsappNumberService;
-use App\Services\whatsapp_chats\WhatsappChatService;
 use Illuminate\Http\Request;
+use App\Services\logs\LogService;
+use App\Services\whatsapp_chats\WhatsappChatService;
+use App\Services\whatsapp_messages\WhatsappMessageService;
+use App\Repositories\whatsapp_numbers\WhatsappNumberRepository;
 
 class WebhookEntrieService
 {
@@ -38,15 +38,15 @@ class WebhookEntrieService
             $metadata = $value["metadata"];
             $messages = $value["messages"][0];
             $phone_number_id = $metadata["phone_number_id"];
-            $from = $messages["from"];
 
-            $whatsappNumber = WhatsappNumberService::show($companyId, $phone_number_id);
-            $phone_number_id = $whatsappNumber->id;
-            $api_key = $whatsappNumber->api_key;
+            $whatsappNumberData = WhatsappNumberRepository::show($companyId, $phone_number_id);
 
-            $chatData = WhatsappChatService::store($request, $companyId);
-            
-            WhatsappMessageService::store($request, $companyId);
+            if (!$whatsappNumberData) {
+                throw new \Exception("El número seleccionado no existe", 400);
+            }
+
+            WhatsappChatService::store($request, $companyId);
+            WhatsappMessageService::store($request, $companyId, "input");
             LogService::entries(json_encode($entry));
         });
     }
