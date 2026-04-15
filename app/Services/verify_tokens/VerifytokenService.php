@@ -18,13 +18,14 @@ class VerifytokenService
      * Summary of show
      * Lógica para buscar un token de verificación por su ID
      * 
-     * @param mixed $id
+     * @param string $companyId
+     * @param string $id
      * @throws \Exception
      * @return \App\Models\VerifyToken
      */
-    public static function show(string $id, string $companyId)
+    public static function show(string $companyId, string $id)
     {
-        $verifyToken = VerifyTokenRepository::show($id, $companyId);
+        $verifyToken = VerifyTokenRepository::show($companyId, $id);
 
         if (!$verifyToken) {
             throw new \Exception("El token seleccionado no existe", 400);
