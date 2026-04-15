@@ -134,15 +134,15 @@ class WhatsappChatRepository
      * @param string $id ID del chat de whatsapp a actualizar
      * @param array $data Datos a actualizar en el chat de whatsapp
      * @throws \Exception
-     * @return bool|int
+     * @return void
      */
     public static function update(
         string $companyId, 
         string $id, 
         array $data
-    ): bool|int
+    ): void
     {
-        return UpdateWhatsappChatRepository::update($companyId, $id, $data);
+        UpdateWhatsappChatRepository::update($companyId, $id, $data);
     }
 
     /**
