@@ -29,7 +29,8 @@ class WhatsappMessage extends Model
         'video',
         'error',
         'messages',
-        'status'
+        'status',
+        'sent_by'
     ];
 
     protected $casts = [
@@ -47,7 +48,8 @@ class WhatsappMessage extends Model
         'video' => 'string',
         'error' => 'string',
         'messages' => 'array',
-        'status' => 'string'
+        'status' => 'string',
+        'sent_by' => 'string'
     ];
 
     public function companyData()
@@ -58,6 +60,11 @@ class WhatsappMessage extends Model
     public function chatData()
     {
         return $this->belongsTo(WhatsappChat::class, 'whatsapp_chat_id', 'id');
+    }
+
+    public function senderData()
+    {
+        return $this->belongsTo(User::class, 'sent_by', 'id');
     }
 
     protected static function boot()

@@ -19,11 +19,14 @@ class WhatsappChatFactory extends Factory
      */
     public function definition(): array
     {
+        $phoneNumber = $this->faker->phoneNumber();
+        $id = "CHAT-$phoneNumber";
+
         return [
-            "id" => $this->faker->uuid(),
+            "id" => $id,
             'whatsapp_number_id' => WhatsappNumber::inRandomOrder()->first()->id,
             'company_id' => Company::inRandomOrder()->first()->id,
-            'from' => $this->faker->phoneNumber(),
+            'from' => $phoneNumber,
         ];
     }
 }

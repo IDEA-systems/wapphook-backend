@@ -22,15 +22,19 @@ class UpdateWhatsappChatService
      * @param Request $request
      * @param string $companyId
      * @param string $id
-     * @return bool|int
+     * @return void
      */
     public static function update(
         Request $request, 
         string $companyId, 
         string $id
-    ): bool|int
+    ): void
     {
-        $whatsappChat = WhatsappChatService::show($companyId, $id);
+        $whatsappChat = WhatsappChatRepository::show($companyId, $id);
+
+        if (!$whatsappChat) {
+            throw new \Exception("El chat seleccionado no existe", 400);
+        }
 
         $whatsapp_number_id = isset($request->whatsapp_number_id) 
             ? $request->whatsapp_number_id 
@@ -60,7 +64,7 @@ class UpdateWhatsappChatService
             ? $request->status 
             : $whatsappChat->status;
 
-        return WhatsappChatRepository::update($companyId, $id, [
+        WhatsappChatRepository::update($companyId, $id, [
             'whatsapp_number_id' => $whatsapp_number_id,
             'from' => $from,
             'contact_name' => $contact_name,

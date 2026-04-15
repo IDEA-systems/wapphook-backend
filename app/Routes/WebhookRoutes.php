@@ -3,7 +3,8 @@
 namespace App\Routes;
 
 use App\Http\Controllers\WebhookController;
-use App\Http\Middleware\WebhookSuscribeMiddleware;
+use App\Http\Middleware\SessionCompanyMiddleware;
+use App\Http\Middleware\WebhookCompanyMiddleware;
 use Illuminate\Support\Facades\Route;
 
 class WebhookRoutes
@@ -18,8 +19,12 @@ class WebhookRoutes
 
     public static function register()
     {
-        Route::middleware([WebhookSuscribeMiddleware::class])
-            ->get('/webhook/{company_id}', [WebhookController::class, 'suscribe']);
-        Route::post('/webhook/{company_id}', [WebhookController::class, 'receive']);
+        Route::prefix('/{companyId}')
+            ->middleware([
+                WebhookCompanyMiddleware::class
+            ])->group(function () {
+                Route::get('/webhook', [WebhookController::class, 'suscribe']);
+                Route::post('/webhook', [WebhookController::class, 'receive']);
+            });
     }
 }

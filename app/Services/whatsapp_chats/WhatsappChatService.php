@@ -124,15 +124,15 @@ class WhatsappChatService
      * @param Request $request
      * @param string $companyId
      * @param string $id
-     * @return bool|int
+     * @return void
      */
     public static function update(
         Request $request, 
         string $companyId, 
         string $id
-    ): bool|int
+    ): void
     {
-        return UpdateWhatsappChatService::update($request, $companyId, $id);
+        UpdateWhatsappChatService::update($request, $companyId, $id);
     }
 
     /**

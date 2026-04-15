@@ -96,7 +96,7 @@ class WhatsappMessageController extends Controller
             return response()->json([
                 'title' => 'Whatsapp message',
                 'details' => 'Mensaje de whatsapp creado'
-            ], 201);
+            ], 200);
         } catch (\Exception $error) {
             $code = $error->getCode() ?: 500;
             $message = $error->getMessage();
@@ -125,7 +125,7 @@ class WhatsappMessageController extends Controller
     ): JsonResponse
     {
         try {
-            $response = WhatsappMessageService::update($request, $companyId, $id);
+            WhatsappMessageService::update($request, $companyId, $id);
 
             return response()->json([
                 'title' => 'Whatsapp message',

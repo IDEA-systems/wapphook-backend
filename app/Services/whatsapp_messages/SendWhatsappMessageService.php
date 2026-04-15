@@ -6,6 +6,7 @@ use App\Models\WhatsappMessage;
 use App\Models\WhatsappNumber;
 use App\Repositories\whatsapp_messages\WhatsappMessageRepository;
 use App\Repositories\whatsapp_numbers\WhatsappNumberRepository;
+use App\Services\logs\LogService;
 use App\Services\messenger\SendWhatsappResponseService;
 use Illuminate\Http\Request;
 
@@ -34,33 +35,21 @@ class SendWhatsappMessageService
     {
         \DB::transaction(function () use ($request, $companyId) {
             $phone_number_id = $request->post('phone_number_id');
-            $whatsappChatId = $request->post('whatsapp_chat_id');
             $messages = $request->post('messages');
-            $status = $request->post('status');
-            $badge = $request->post('badge');
-            $type = $request->post('type');
 
-            WhatsappMessageRepository::store([
-                'company_id' => $companyId,
-                'whatsapp_chat_id' => $whatsappChatId,
-                'type' => $type,
-                'badge' => $badge,
-                'text' => $messages['text']['body'],
-                'messages' => $messages,
-                'status' => $status
-            ]);
+            $whatsapNumberData = WhatsappNumberRepository::show($companyId, $phone_number_id);
 
-            $whatsapNumber = WhatsappNumberRepository::show($companyId, $phone_number_id);
-
-            if (!$whatsapNumber) {
+            if (!$whatsapNumberData) {
                 throw new \Exception("El numero de whatsapp no existe", 400);
             }
 
-            SendWhatsappResponseService::text(
-                $whatsapNumber->id,
-                $whatsapNumber->api_key,
-                $messages
-            );
+            LogService::activity($whatsapNumberData);
+
+            $apiKey = $whatsapNumberData->api_key;
+            $whatsappNumberId = $whatsapNumberData->id;
+
+            WhatsappMessageService::store($request, $companyId, "output");
+            SendWhatsappResponseService::text($whatsappNumberId, $apiKey, $messages);
         });
     }
 }

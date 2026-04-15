@@ -64,6 +64,10 @@ return new class extends Migration
                 ->nullable()
                 ->default('unread');
 
+            $table->string('sent_by')
+                ->nullable()
+                ->default(null);
+
             $table->timestamps();
 
             $table->foreign('company_id')
@@ -71,6 +75,12 @@ return new class extends Migration
                 ->on('companies')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
+
+            $table->foreign('sent_by')
+                ->references('id')
+                ->on('users')
+                ->nullOnDelete()
+                ->cascadeOnUpdate();
 
             $table->foreign('whatsapp_chat_id')
                 ->references('id')

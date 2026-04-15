@@ -2,11 +2,11 @@
 
 namespace App\Services\whatsapp_messages;
 
+use Illuminate\Http\Request;
 use App\Models\WhatsappMessage;
 use App\Repositories\whatsapp_messages\WhatsappMessageRepository;
-use Illuminate\Http\Request;
 
-class StoreWhatsappMessageTextService
+class StoreInputWhatsappMessageTextService
 {
     /**
      * Create a new class instance.
