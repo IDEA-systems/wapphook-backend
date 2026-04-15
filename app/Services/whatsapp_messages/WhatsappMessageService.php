@@ -61,14 +61,15 @@ class WhatsappMessageService
     public static function store(
         Request $request, 
         string $companyId,
-        string $mode = "input"
+        string $whatsappChatId,
+        string $mode
     ): WhatsappMessage|null
     {
         $input = ConstantSupport::badgeInput();
         $output = ConstantSupport::badgeOutput();
 
         return match($mode) {
-            $input => StoreWhatsappMessageService::input($request, $companyId),
+            $input => StoreWhatsappMessageService::input($request, $companyId, $whatsappChatId),
             $output => StoreWhatsappMessageService::output($request, $companyId),
             default => throw new \Exception("Modo de mensaje desconocido", 400)
         };

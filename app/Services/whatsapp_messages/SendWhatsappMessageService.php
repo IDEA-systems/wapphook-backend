@@ -8,6 +8,7 @@ use App\Repositories\whatsapp_messages\WhatsappMessageRepository;
 use App\Repositories\whatsapp_numbers\WhatsappNumberRepository;
 use App\Services\logs\LogService;
 use App\Services\messenger\SendWhatsappResponseService;
+use App\Support\ConstantSupport;
 use Illuminate\Http\Request;
 
 class SendWhatsappMessageService
@@ -34,6 +35,9 @@ class SendWhatsappMessageService
     ): void
     {
         \DB::transaction(function () use ($request, $companyId) {
+            $modeMessage = ConstantSupport::badgeOutput();
+
+            $whatsapp_chat_id = $request->post('whatsapp_chat_id');
             $phone_number_id = $request->post('phone_number_id');
             $messages = $request->post('messages');
 
@@ -43,12 +47,10 @@ class SendWhatsappMessageService
                 throw new \Exception("El numero de whatsapp no existe", 400);
             }
 
-            LogService::activity($whatsapNumberData);
-
-            $apiKey = $whatsapNumberData->api_key;
             $whatsappNumberId = $whatsapNumberData->id;
+            $apiKey = $whatsapNumberData->api_key;
 
-            WhatsappMessageService::store($request, $companyId, "output");
+            WhatsappMessageService::store($request, $companyId, $whatsapp_chat_id, $modeMessage);
             SendWhatsappResponseService::text($whatsappNumberId, $apiKey, $messages);
         });
     }

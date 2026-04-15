@@ -2,6 +2,7 @@
 
 namespace App\Services\whatsapp_messages;
 
+use App\Repositories\whatsapp_chats\WhatsappChatRepository;
 use Illuminate\Http\Request;
 use App\Models\WhatsappMessage;
 use App\Repositories\whatsapp_messages\WhatsappMessageRepository;
@@ -18,7 +19,8 @@ class StoreInputWhatsappMessageTextService
 
     public static function store(
         Request $request, 
-        string $companyId
+        string $companyId,
+        string $whatsappChatId
     ): WhatsappMessage
     {
         $entry = $request->entry[0];
@@ -26,9 +28,13 @@ class StoreInputWhatsappMessageTextService
         $value = $changes["value"];
         $messages = $value["messages"][0];
         $type = $messages["type"];
-        $from = $messages["from"];
         $text = $messages["text"]["body"];
-        $whatsappChatId = "CHAT-$from";
+
+        $whatsappChatData = WhatsappChatRepository::show($companyId, $whatsappChatId);
+
+        if (!$whatsappChatData) {
+            throw new \Exception("El chat seleccionado no existe", 400);
+        }
 
         return WhatsappMessageRepository::store([
             "company_id" => $companyId,
