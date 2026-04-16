@@ -146,6 +146,24 @@ class WhatsappChatService
     }
 
     /**
+     * Summary of mark
+     * Marcar los mensajes de un chat como leídos.
+     * 
+     * @param Request $request
+     * @param string $companyId
+     * @param string $id
+     * @return void
+     */
+    public static function mark(
+        Request $request, 
+        string $companyId,
+        string $id
+    ): void
+    {
+        MarkWhatsappChatService::mark($request, $companyId, $id);
+    }
+
+    /**
      * Summary of delete
      * Eliminar un chat de WhatsApp existente.
      * 

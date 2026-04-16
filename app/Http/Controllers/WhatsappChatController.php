@@ -141,6 +141,40 @@ class WhatsappChatController extends Controller
         }
     }
 
+    /**
+     * Summary of mark
+     * Marcar los mensajes de un chat como leidos
+     * 
+     * @param Request $request
+     * @param string $companyId
+     * @param string $id
+     * @return JsonResponse
+     */
+    public static function mark(
+        Request $request, 
+        string $companyId,
+        string $id
+    ): JsonResponse
+    {
+        try {
+            WhatsappChatService::mark($request, $companyId, $id);
+
+            return response()->json([
+                'title' => 'Whatsapp chat',
+                'details' => 'Mensajes del chat marcados como leídos'
+            ], 200);
+        } catch (\Exception $error) {
+            $code = $error->getCode() ?: 500;
+            $message = $error->getMessage();
+            LogService::error("WhatsappChatController@mark: $message");
+
+            return response()->json([
+                'name' => 'Whatsapp chat',
+                'message' => $message
+            ], $code);
+        }
+    }
+
     public static function delete(
         Request $request, 
         string $companyId, 

@@ -36,6 +36,9 @@ class WhatsappChatRoutes
                 Route::middleware([WhatsappChatWriteMiddleware::class])
                     ->put('/whatsapp-chats/{id}', [WhatsappChatController::class, 'update']);
 
+                Route::middleware([WhatsappChatWriteMiddleware::class])
+                    ->put('/whatsapp-chats/{id}/mark-messages', [WhatsappChatController::class, 'mark']);
+
                 Route::middleware([WhatsappChatDeleteMiddleware::class])
                     ->delete('/whatsapp-chats/{id}', [WhatsappChatController::class, 'delete']);
             });
