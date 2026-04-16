@@ -3,7 +3,6 @@
 namespace App\Routes;
 
 use App\Http\Controllers\WebhookController;
-use App\Http\Middleware\SessionCompanyMiddleware;
 use App\Http\Middleware\WebhookCompanyMiddleware;
 use Illuminate\Support\Facades\Route;
 

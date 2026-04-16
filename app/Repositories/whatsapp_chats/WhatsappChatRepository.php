@@ -146,6 +146,26 @@ class WhatsappChatRepository
     }
 
     /**
+     * Summary of read
+     * 
+     * Marcar mensajes como leídos en un chat de WhatsApp específico.
+     * Las validaciones y el manejo de errores se realizan en la capa de servicio.
+     * 
+     * @param string $companyId company_id para asegurar que los mensajes pertenecen a la empresa
+     * @param string $id ID del chat de whatsapp cuyos mensajes se marcarán como leídos
+     * @throws \Exception
+     * @return void
+     */
+    public static function mark(
+        string $companyId, 
+        string $id,
+        array $data
+    ): void
+    {
+        MarkWhatsappChatRepository::mark($companyId, $id, $data);
+    }
+
+    /**
      * Summary of delete
      * 
      * Elimina un chat de whatsapp específico para una empresa dada.
