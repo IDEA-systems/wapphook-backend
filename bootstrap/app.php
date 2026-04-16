@@ -15,5 +15,11 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        $exceptions->render(function (\Exception $e, $request) {
+            return response()->json([
+                "status" => 401,
+                "name" => 'No autorizado',
+                'message' => 'La sessión ha expirado o no es válida'
+            ], 401);
+        });
     })->create();
