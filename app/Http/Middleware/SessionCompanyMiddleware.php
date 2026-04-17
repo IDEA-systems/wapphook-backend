@@ -40,7 +40,7 @@ class SessionCompanyMiddleware
         if (!$company) {
             return $this->deniedResponse(
                 "No autorizado",
-                "Esta intentando acceder a los recursos de una empresa que no existe.",
+                "Los recursos solicitados no existen",
                 400
             );
         }
@@ -49,8 +49,8 @@ class SessionCompanyMiddleware
 
         if ($user->company_id != $company->id) {
             return $this->deniedResponse(
-                "Prohibido",
-                "No tienes acceso a los recursos de esta empresa.",
+                "No authorizado",
+                "Los datos de autenticación son incorrectos",
                 403
             );
         }

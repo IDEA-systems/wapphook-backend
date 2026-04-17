@@ -21,13 +21,13 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         Company::factory()->count(10)->create();
-        User::factory()->count(10)->create();
-        Application::factory()->count(1)->create();
-        WhatsappAccount::factory()->count(1)->create();
-        WhatsappNumber::factory()->count(1)->create();
-        VerifyToken::factory()->count(1)->create();
-        WhatsappResponse::factory()->count(1)->create();
-        WhatsappChat::factory()->count(10)->create();
-        WhatsappMessage::factory()->count(100)->create();
+        User::factory()->count(5)->create();
+        Application::factory()->count(20)->create();
+        WhatsappAccount::factory()->count(50)->create();
+        WhatsappNumber::factory()->count(100)->create();
+        VerifyToken::factory()->count(20)->create();
+        WhatsappResponse::factory()->count(10)->create();
+        WhatsappChat::factory()->count(500)->create();
+        WhatsappMessage::factory()->count(3000)->create();
     }
 }
