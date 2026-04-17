@@ -19,7 +19,8 @@ class ApplicationFactory extends Factory
     public function definition(): array
     {
         return [
-            "id" => "1552161089185160",
+            // "id" => "1552161089185160",
+            'id' => (string) $this->faker->randomNumber(9, true),
             "company_id" => Company::inRandomOrder()->first()->id,
             "name" => $this->faker->name()
         ];

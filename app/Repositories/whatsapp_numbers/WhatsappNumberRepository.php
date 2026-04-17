@@ -40,7 +40,10 @@ class WhatsappNumberRepository
      * @return WhatsappNumber|null
      * @throws \Exception
      */
-    public static function show(string $companyId, string $id): WhatsappNumber|null
+    public static function show(
+        string $companyId, 
+        string $id
+    ): WhatsappNumber|null
     {
         return ShowWhatsappNumberRepository::show($companyId, $id);
     }
@@ -66,7 +69,11 @@ class WhatsappNumberRepository
      * @return bool|int
      * @throws \Exception
     */
-    public static function update(string $companyId, string $id, array $data): bool|int
+    public static function update(
+        string $companyId, 
+        string $id, 
+        array $data
+    ): bool|int
     {
         return UpdateWhatsappNumberRepository::update($companyId, $id, $data);
     }
@@ -79,7 +86,10 @@ class WhatsappNumberRepository
      * @return mixed
      * @throws \Exception
     */
-    public static function delete(string $companyId, string $id): mixed
+    public static function delete(
+        string $companyId, 
+        string $id
+    ): mixed
     {
         return DeleteWhatsappNumberRepository::delete($companyId, $id);
     }

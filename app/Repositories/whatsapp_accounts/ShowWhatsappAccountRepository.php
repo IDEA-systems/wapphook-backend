@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Repositories\whatsapp_numbers;
+namespace App\Repositories\whatsapp_accounts;
 
-use App\Models\WhatsappNumber;
+use App\Models\WhatsappAccount;
 use App\Services\logs\LogService;
 
-class ShowWhatsappNumberRepository
+class ShowWhatsappAccountRepository
 {
     /**
      * Create a new class instance.
@@ -16,27 +16,27 @@ class ShowWhatsappNumberRepository
     }
 
     /**
-     * Show a whatsapp number by id.
-     * Lógica para mostrar un numero de telefono de whatsapp específico
-     *
+     * Summary of show
+     * Obtener un numero de whatsapp de la compañia
+     * 
      * @param string $companyId
      * @param string $id
-     * @return WhatsappNumber|null
      * @throws \Exception
+     * @return WhatsappAccount|null
      */
     public static function show(
         string $companyId, 
         string $id
-    ): WhatsappNumber|null
+    ): WhatsappAccount|null
     {
         try {
-            return WhatsappNumber::where('company_id', $companyId)
+            return WhatsappAccount::where('company_id', $companyId)
                 ->where('id', $id)
                 ->first();
         } catch (\Exception $error) {
             $message = $error->getMessage();
-            LogService::error("ShowWhatsappNumberRepository@show: $message");
-            throw new \Exception("Error al buscar el número de whatsapp", 500);
+            LogService::error("ShowWhatsappAccountRepository@show: $message");
+            throw new \Exception("Error al obtener el numero de whatsapp");
         }
     }
 }

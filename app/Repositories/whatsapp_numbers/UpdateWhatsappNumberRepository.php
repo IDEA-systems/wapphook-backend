@@ -15,7 +15,18 @@ class UpdateWhatsappNumberRepository
         //
     }
 
-    public static function update(string $companyId, string $id, array $data)
+    /**
+     * Update a whatsapp number.
+     *
+     * @param string $companyId
+     * @param string $id
+     * @param array $data
+    */
+    public static function update(
+        string $companyId, 
+        string $id, 
+        array $data
+    ): bool|int
     {
         try {
             return WhatsappNumber::where('company_id', $companyId)

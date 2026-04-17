@@ -4,6 +4,7 @@ namespace App\Repositories\whatsapp_numbers;
 
 use App\Models\WhatsappNumber;
 use App\Services\logs\LogService;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class IndexWhatsappNumberRepository
 {
@@ -15,13 +16,26 @@ class IndexWhatsappNumberRepository
         //
     }
 
-    public static function index(string $companyId, array $filters = [], array $params = [])
+    /**
+     * Index whatsapp numbers with filters and pagination.
+     *
+     * @param string $companyId
+     * @param array $filters
+     * @param array $params
+     * @return LengthAwarePaginator
+     * @throws \Exception
+     */
+    public static function index(
+        string $companyId, 
+        array $filters = [], 
+        array $params = []
+    ): LengthAwarePaginator
     {
         try {
-            $rows = $params['rows'] ?? 10;
-            $page = $params['page'] ?? 1;
-            $sort = $params['sort'] ?? 'created_at';
-            $order = $params['order'] ?? 'desc';
+            $rows = $params['rows'];
+            $page = $params['page'];
+            $sort = $params['sort'];
+            $order = $params['order'];
 
             $query = WhatsappNumber::query();
 
