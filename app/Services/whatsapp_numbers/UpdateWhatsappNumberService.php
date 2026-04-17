@@ -2,6 +2,7 @@
 
 namespace App\Services\whatsapp_numbers;
 
+use App\Http\Requests\WhatsappNumberUpdateRequest;
 use App\Repositories\whatsapp_numbers\WhatsappNumberRepository;
 use Illuminate\Http\Request;
 
@@ -15,8 +16,18 @@ class UpdateWhatsappNumberService
         //
     }
 
+    /**
+     * Summary of update
+     * Lógica para actualizar un número de whatsapp de una empresa
+     * 
+     * @param WhatsappNumberUpdateRequest $request
+     * @param string $companyId
+     * @param string $id
+     * @throws \Exception
+     * @return bool|int
+     */
     public static function update(
-        Request $request, 
+        WhatsappNumberUpdateRequest $request, 
         string $companyId, 
         string $id
     ): bool|int
@@ -27,32 +38,32 @@ class UpdateWhatsappNumberService
             throw new \Exception("Este numero no esta registrado para esta compañia", 400);
         }
 
-        $id = isset($request->id) 
-            ? $request->id 
-            : $whatsappNumberData->id;
+        $whatsapp_account_id = $request->input(
+            'whatsapp_account_id', 
+            $whatsappNumberData->whatsapp_account_id
+        );
+        
+        $name_visible = $request->input(
+            'name_visible', 
+            $whatsappNumberData->name_visible
+        );
 
-        $whatsapp_account_id = isset($request->whatsapp_account_id) 
-            ? $request->whatsapp_account_id 
-            : $whatsappNumberData->whatsapp_account_id;
+        $phone_number = $request->input(
+            'phone_number', 
+            $whatsappNumberData->phone_number
+        );
 
-        $name_visible = isset($request->name_visible) 
-            ? $request->name_visible 
-            : $whatsappNumberData->name_visible;
+        $api_key = $request->input(
+            'api_key', 
+            $whatsappNumberData->api_key
+        );
 
-        $phone_number = isset($request->phone_number) 
-            ? $request->phone_number 
-            : $whatsappNumberData->phone_number;
-
-        $api_key = isset($request->api_key) 
-            ? $request->api_key 
-            : $whatsappNumberData->api_key;
-
-        $pin = isset($request->pin) 
-            ? $request->pin 
-            : $whatsappNumberData->pin;
-
+        $pin = $request->input(
+            'pin', 
+            $whatsappNumberData->pin
+        );
+            
         return WhatsappNumberRepository::update($companyId, $id, [
-            'id' => $id,
             'company_id' => $companyId,
             'whatsapp_account_id' => $whatsapp_account_id,
             'name_visible' => $name_visible,

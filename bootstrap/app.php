@@ -1,8 +1,12 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Application;
-use Illuminate\Foundation\Configuration\Exceptions;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Configuration\Middleware;
+use Laravel\Sanctum\Http\Middleware\CheckAbilities;
+use Laravel\Sanctum\Http\Middleware\CheckForAnyAbility;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -12,14 +16,41 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->alias([
+            'abilities' => CheckAbilities::class,
+            'ability' => CheckForAnyAbility::class
+        ]);
     })
-    ->withExceptions(function (Exceptions $exceptions): void {
-        $exceptions->render(function (\Exception $e, $request) {
+    ->withExceptions(function ($exceptions): void {
+        $exceptions->render(function (AuthenticationException $error, Request $request) {
             return response()->json([
                 "status" => 401,
-                "name" => 'No autorizado',
-                'message' => 'La sessión ha expirado o no es válida'
+                "name" => "No autenticado",
+                "message" => "No se ha podido autenticar al usuario"
             ], 401);
+        });
+
+        $exceptions->render(function (NotFoundHttpException $error, Request $request) {
+            return response()->json([
+                "status" => 404,
+                "name" => "No encontrado",
+                "message" => "Recurso no encontrado"
+            ], 404);
+        });
+
+        $exceptions->render(function (Exception $error, Request $request) {
+            return response()->json([
+                "status" => 500,
+                "name" => "Error interno del servidor",
+                "message" => "Ha ocurrido un error inesperado"
+            ], 500);
+        });
+
+        $exceptions->render(function (Throwable $error, Request $request) {
+            return response()->json([
+                "status" => 500,
+                "name" => "Error interno del servidor",
+                "message" => "Ha ocurrido un error inesperado"
+            ], 500);
         });
     })->create();

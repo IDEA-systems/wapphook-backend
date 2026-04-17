@@ -2,6 +2,8 @@
 
 namespace App\Services\whatsapp_numbers;
 
+use App\Http\Requests\WhatsappNumberStoreRequest;
+use App\Http\Requests\WhatsappNumberUpdateRequest;
 use App\Models\WhatsappNumber;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -53,13 +55,13 @@ class WhatsappNumberService
      * Summary of store
      * Lógica para crear un nuevo número de whatsapp para una empresa
      * 
-     * @param \Illuminate\Http\Request $request
+     * @param WhatsappNumberStoreRequest $request
      * @param string $companyId
      * @throws \Exception
      * @return WhatsappNumber
     */
     public static function store(
-        Request $request, 
+        WhatsappNumberStoreRequest $request, 
         string $companyId
     ): WhatsappNumber
     {
@@ -70,14 +72,14 @@ class WhatsappNumberService
      * Summary of update
      * Lógica para actualizar un número de whatsapp de una empresa
      * 
-     * @param \Illuminate\Http\Request $request
+     * @param WhatsappNumberUpdateRequest $request
      * @param string $companyId
      * @param string $id
      * @throws \Exception
      * @return bool|int
     */
     public static function update(
-        Request $request, 
+        WhatsappNumberUpdateRequest $request, 
         string $companyId, 
         string $id
     ): bool|int

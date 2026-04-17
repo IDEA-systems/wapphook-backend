@@ -29,12 +29,12 @@ class ShowWhatsappNumberService
         string $id
     ): WhatsappNumber
     {
-        $whatsappNumberData = WhatsappNumberRepository::show($companyId, $id);  
+        $whatsappNumber = WhatsappNumberRepository::show($companyId, $id);  
 
-        if (!$whatsappNumberData) {
+        if (!$whatsappNumber) {
             throw new \Exception("El numero seleccionado no existe para esta compañia", 400);
         }
 
-        return $whatsappNumberData;
+        return $whatsappNumber;
     }
 }
