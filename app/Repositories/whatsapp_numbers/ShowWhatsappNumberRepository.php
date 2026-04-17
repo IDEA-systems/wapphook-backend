@@ -24,11 +24,14 @@ class ShowWhatsappNumberRepository
      * @return WhatsappNumber|null
      * @throws \Exception
      */
-    public static function show(string $companyId, string $id): WhatsappNumber|null
+    public static function show(
+        string $companyId, 
+        string $id
+    ): WhatsappNumber|null
     {
         try {
-            return WhatsappNumber::where('id', $id)
-                ->where('company_id', $companyId)
+            return WhatsappNumber::where('company_id', $companyId)
+                ->where('id', $id)
                 ->first();
         } catch (\Exception $error) {
             $message = $error->getMessage();

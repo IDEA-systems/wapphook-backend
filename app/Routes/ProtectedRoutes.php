@@ -20,6 +20,7 @@ class ProtectedRoutes
         Route::middleware('auth:sanctum')->group(function () {
             LogoutRoutes::register();
             WhatsappChatRoutes::register();
+            WhatsappNumberRoutes::register();
             WhatsappMessagesRoutes::register();
         });
     }

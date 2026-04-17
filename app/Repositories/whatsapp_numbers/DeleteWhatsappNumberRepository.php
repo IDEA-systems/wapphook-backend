@@ -23,7 +23,10 @@ class DeleteWhatsappNumberRepository
      * @param string $id
      * @return mixed
     */
-    public static function delete(string $companyId, string $id): mixed
+    public static function delete(
+        string $companyId, 
+        string $id
+    ): mixed
     {
         try {
             return WhatsappNumber::where('company_id', $companyId)
