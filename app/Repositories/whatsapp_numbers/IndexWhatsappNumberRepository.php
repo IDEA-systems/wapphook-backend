@@ -21,21 +21,21 @@ class IndexWhatsappNumberRepository
      *
      * @param string $companyId
      * @param array $filters
-     * @param array $params
+     * @param array $pagination
      * @return LengthAwarePaginator
      * @throws \Exception
      */
     public static function index(
         string $companyId, 
         array $filters = [], 
-        array $params = []
+        array $pagination = []
     ): LengthAwarePaginator
     {
         try {
-            $rows = $params['rows'];
-            $page = $params['page'];
-            $sort = $params['sort'];
-            $order = $params['order'];
+            $rows = $pagination['rows'];
+            $page = $pagination['page'];
+            $sort = $pagination['sort'];
+            $order = $pagination['order'];
 
             $query = WhatsappNumber::query();
 
@@ -45,14 +45,14 @@ class IndexWhatsappNumberRepository
                 $query->where('whatsapp_account_id', $filters["whatsapp_account_id"]);
             }
 
-            if (isset($filters["pin"])) {
-                $query->where('pin', 'like', '%' . $filters["pin"] . '%');
-            }
+            // if (isset($filters["pin"])) {
+            //     $query->where('pin', 'like', '%' . $filters["pin"] . '%');
+            // }
 
-            if (isset($filters["params"])) {
-                $query->where('name_visible', 'like', '%' . $filters["params"] . '%')
-                    ->orWhere('phone_number', 'like', '%' . $filters["params"] . '%');
-            }
+            // if (isset($filters["params"])) {
+            //     $query->where('name_visible', 'like', '%' . $filters["params"] . '%')
+            //         ->orWhere('phone_number', 'like', '%' . $filters["params"] . '%');
+            // }
 
             return $query->orderBy($sort, $order)
                 ->paginate($rows, ['*'], 'page', $page);

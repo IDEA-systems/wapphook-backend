@@ -1,7 +1,11 @@
 <?php
 
+use App\Http\Middleware\SessionCompanyMiddleware;
+use App\Http\Middleware\WebhookCompanyMiddleware;
+use App\Services\logs\LogService;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\Middleware\HandleCors;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Configuration\Middleware;
 use Laravel\Sanctum\Http\Middleware\CheckAbilities;
@@ -16,13 +20,19 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->append(HandleCors::class);
+
         $middleware->alias([
+            'company.webhook' => WebhookCompanyMiddleware::class,
+            'company.session' => SessionCompanyMiddleware::class,
+            'ability' => CheckForAnyAbility::class,
             'abilities' => CheckAbilities::class,
-            'ability' => CheckForAnyAbility::class
         ]);
     })
     ->withExceptions(function ($exceptions): void {
         $exceptions->render(function (AuthenticationException $error, Request $request) {
+            LogService::error("Error".$error->getMessage());
+            
             return response()->json([
                 "status" => 401,
                 "name" => "No autenticado",
@@ -31,6 +41,8 @@ return Application::configure(basePath: dirname(__DIR__))
         });
 
         $exceptions->render(function (NotFoundHttpException $error, Request $request) {
+            LogService::error("Error".$error->getMessage());
+            
             return response()->json([
                 "status" => 404,
                 "name" => "No encontrado",
@@ -39,6 +51,8 @@ return Application::configure(basePath: dirname(__DIR__))
         });
 
         $exceptions->render(function (Exception $error, Request $request) {
+            LogService::error("Error".$error->getMessage());
+
             return response()->json([
                 "status" => 500,
                 "name" => "Error interno del servidor",
@@ -47,6 +61,8 @@ return Application::configure(basePath: dirname(__DIR__))
         });
 
         $exceptions->render(function (Throwable $error, Request $request) {
+            LogService::error("Error".$error->getMessage());
+
             return response()->json([
                 "status" => 500,
                 "name" => "Error interno del servidor",

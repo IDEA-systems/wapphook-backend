@@ -22,17 +22,21 @@ class IndexVerifyTokenRepository
      * Lógica para obtener una lista paginada de tokens de verificación con filtros y ordenamiento
      * 
      * @param array $filters
-     * @param array $params
+     * @param array $pagination
      * @return LengthAwarePaginator
      * @throws \Exception
      */
-    public static function index(string $companyId, array $filters = [], array $params = []): LengthAwarePaginator
+    public static function index(
+        string $companyId, 
+        array $filters = [], 
+        array $pagination = []
+    ): LengthAwarePaginator
     {
         try {
-            $rows = $params['rows'] ?? 10;
-            $page = $params['page'] ?? 1;
-            $sort = $params['sort'] ?? 'created_at';
-            $order = $params['order'] ?? 'desc';
+            $rows = $pagination['rows'];
+            $page = $pagination['page'];
+            $sort = $pagination['sort'];
+            $order = $pagination['order'];
             
             $query = VerifyToken::query();
 

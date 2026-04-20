@@ -3,7 +3,7 @@
 namespace App\Services\webhook;
 
 use App\Services\logs\LogService;
-use App\Services\verify_tokens\VerifytokenService;
+use App\Services\verify_tokens\VerifyTokenService;
 use Illuminate\Http\Request;
 
 class WebhookService
@@ -41,7 +41,7 @@ class WebhookService
             throw new \Exception("Modo de suscripción incorrecto", 400);
         }
 
-        $webhookToken = VerifytokenService::show($companyId, $verify_token);
+        $webhookToken = VerifyTokenService::show($companyId, $verify_token);
         
         if (!$webhookToken) {
             throw new \Exception("Token de verificacion incorrecto", 400);
@@ -52,7 +52,7 @@ class WebhookService
 
     /**
      * Summary of receive
-     * 
+     *  
      * Recibir la entrada del webhook de Facebook Graph
      * Procesar la entrada y almacenar el mensaje en la base de datos
      * Enviar una respuesta por defecto al cliente.

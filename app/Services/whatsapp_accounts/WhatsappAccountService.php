@@ -2,9 +2,10 @@
 
 namespace App\Services\whatsapp_accounts;
 
-use App\Http\Requests\WhatsappAccountIndexRequest;
+use App\Http\Requests\PaginationRequest;
 use App\Http\Requests\WhatsappAccountStoreRequest;
 use App\Http\Requests\WhatsappAccountUpdateRequest;
+use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Models\WhatsappAccount;
 
@@ -23,12 +24,12 @@ class WhatsappAccountService
      * Obtener una lista paginada de cuentas de WhatsApp para una empresa específica,
      * con opciones de filtrado y ordenamiento.
      * 
-     * @param WhatsappAccountIndexRequest $request
+     * @param PaginationRequest $request
      * @param string $companyId
      * @return LengthAwarePaginator
      */
     public static function index(
-        WhatsappAccountIndexRequest $request,
+        PaginationRequest $request,
         string $companyId
     ): LengthAwarePaginator
     {

@@ -19,7 +19,7 @@ class WebhookRoutes
     public static function register()
     {
         Route::prefix('/{companyId}')
-            ->middleware([WebhookCompanyMiddleware::class])
+            ->middleware('company.webhook')
             ->group(function () {
                 Route::get('/webhook', [WebhookController::class, 'suscribe']);
                 Route::post('/webhook', [WebhookController::class, 'receive']);

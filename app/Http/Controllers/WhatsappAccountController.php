@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\WhatsappAccountIndexRequest;
+use App\Http\Requests\PaginationRequest;
 use App\Http\Requests\WhatsappAccountStoreRequest;
 use App\Http\Requests\WhatsappAccountUpdateRequest;
 use App\Services\logs\LogService;
@@ -16,12 +16,12 @@ class WhatsappAccountController extends Controller
      * Summary of index
      * Obtener las cuentas de whatsapp de una empresa.
      * 
-     * @param WhatsappAccountIndexRequest $request
+     * @param PaginationRequest $request
      * @param string $companyId
      * @return JsonResponse
      */
     public static function index(
-        WhatsappAccountIndexRequest $request,
+        PaginationRequest $request,
         string $companyId
     ): JsonResponse
     {
@@ -41,8 +41,8 @@ class WhatsappAccountController extends Controller
 
             return response()->json([
                 'status' => $code,
-                'title' => 'Ocurrió un error',
-                'details' => $message,
+                'name' => 'Whatsapp accounts',
+                'message' => $message,
             ], $code);
         }
     }
@@ -78,8 +78,8 @@ class WhatsappAccountController extends Controller
 
             return response()->json([
                 'status' => $code,
-                'title' => 'Ocurrió un error',
-                'details' => $message,
+                'name' => 'Whatsapp accounts',
+                'message' => $message,
             ], $code);
         }
     }
@@ -113,8 +113,8 @@ class WhatsappAccountController extends Controller
 
             return response()->json([
                 'status' => $code,
-                'title' => 'Ocurrió un error',
-                'details' => $message,
+                'name' => 'Whatsapp accounts',
+                'message' => $message,
             ], $code);
         }
     }
@@ -150,8 +150,8 @@ class WhatsappAccountController extends Controller
 
             return response()->json([
                 'status' => $code,
-                'title' => 'Ocurrió un error',
-                'details' => $message,
+                'name' => 'Whatsapp accounts',
+                'message' => $message,
             ], $code);
         }
     }
@@ -186,8 +186,8 @@ class WhatsappAccountController extends Controller
 
             return response()->json([
                 'status' => $code,
-                'title' => 'Ocurrió un error',
-                'details' => $message,
+                'name' => 'Whatsapp accounts',
+                'message' => $message,
             ], $code);
         }
     }

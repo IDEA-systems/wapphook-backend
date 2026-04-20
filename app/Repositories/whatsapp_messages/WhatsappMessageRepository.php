@@ -21,16 +21,16 @@ class WhatsappMessageRepository
      * 
      * @param string $companyId
      * @param array $filters
-     * @param array $params
+     * @param array $pagination
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     public static function index(
         string $companyId,
         array $filters = [], 
-        array $params = []
+        array $pagination = []
     ): LengthAwarePaginator
     {
-        return IndexWhatsappMessageChatRepository::index($companyId, $filters, $params);
+        return IndexWhatsappMessageChatRepository::index($companyId, $filters, $pagination);
     }
 
     /**

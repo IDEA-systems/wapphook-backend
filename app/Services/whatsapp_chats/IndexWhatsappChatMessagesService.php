@@ -2,6 +2,7 @@
 
 namespace App\Services\whatsapp_chats;
 
+use App\Http\Requests\PaginationRequest;
 use App\Repositories\whatsapp_chats\WhatsappChatRepository;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
@@ -17,13 +18,23 @@ class IndexWhatsappChatMessagesService
     }
 
     public static function messages(
-        Request $request, 
+        PaginationRequest $request, 
         string $companyId, 
         string $id
     ): LengthAwarePaginator
     {
-        $filters = $request->only(['type', 'status', 'badge']);
-        $pagination = $request->only(['page', 'rows', 'sort', 'order']);
+        $filters = $request->only([
+            'type', 
+            'status', 
+            'badge'
+        ]);
+        
+        $pagination = $request->only([
+            'rows', 
+            'page', 
+            'sort', 
+            'order'
+        ]);
 
         return WhatsappChatRepository::messages($companyId, $id, $filters, $pagination);
     }

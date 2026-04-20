@@ -3,6 +3,7 @@
 namespace App\Repositories\users;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class UserRepository
@@ -38,15 +39,15 @@ class UserRepository
      * Obtener los detalles de un usuario por su ID.
      * 
      * @param string $companyId
-     * @param string $userId
+     * @param string $id
      * @return User|null
      */
     public static function show(
         string $companyId, 
-        string $userId
+        string $id
     ): User|null
     {
-        return ShowUserRepository::show($companyId, $userId);
+        return ShowUserRepository::show($companyId, $id);
     }
 
     /**
@@ -62,20 +63,48 @@ class UserRepository
     }
 
     /**
+     * Summary of store
+     * Crear un usuario y guardar sus permisos.
+     *
+     * @param array $data
+     * @return User
+     */
+    public static function store(array $data): User
+    {
+        return StoreUserRepository::store($data);
+    }
+
+    /**
      * Summary of update
      * Actualizar los detalles de un usuario.
      * 
      * @param string $companyId
-     * @param string $userId
+     * @param string $id
      * @param array $data
-     * @return bool|int
+     * @return User
      */
     public static function update(
         string $companyId, 
-        string $userId, 
+        string $id, 
         array $data
-    ): bool|int
+    ): User
     {
-        return UpdateUserRepository::update($companyId, $userId, $data);
+        return UpdateUserRepository::update($companyId, $id, $data);
+    }
+
+    /**
+     * Summary of delete
+     * Eliminar un usuario de una compañia
+     * 
+     * @param string $companyId
+     * @param string $id
+     * @return void
+     */
+    public static function delete(
+        string $companyId,
+        string $id
+    ): void
+    {
+        DeleteUserRepository::delete($companyId, $id);
     }
 }

@@ -46,7 +46,7 @@ class VerifyToken extends Model
         parent::boot();
         
         static::creating(function ($model) {
-            $model->id = Str::random(40);
+            $model->id = Str::random(50);
         });
     }
 }

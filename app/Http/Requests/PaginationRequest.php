@@ -9,7 +9,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rule;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class WhatsappAccountIndexRequest extends FormRequest
+class PaginationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,14 +27,6 @@ class WhatsappAccountIndexRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'application_id' => [
-                'sometimes',
-                'string',
-                'min:1',
-                'max:255',
-                Rule::exists('applications', 'id')
-                    ->where('company_id', $this->route('companyId')),
-            ],
             'page' => [
                 'required',
                 'integer',
@@ -51,8 +43,7 @@ class WhatsappAccountIndexRequest extends FormRequest
                 'in:asc,desc',
             ],
             'sort' => [
-                'required',
-                'in:id,name,application_id,created_at,updated_at',
+                'required'
             ],
         ];
     }
@@ -74,7 +65,7 @@ class WhatsappAccountIndexRequest extends FormRequest
             'order.required' => 'El orden es obligatorio.',
             'order.in' => 'El orden debe ser "asc" o "desc".',
             'sort.required' => 'El campo de ordenamiento es obligatorio.',
-            'sort.in' => 'El campo de ordenamiento debe ser uno de: id, name, application_id, created_at, updated_at.',
+            'sort.in' => 'El campo de ordenamiento debe ser uno de: id, name, created_at, updated_at.',
         ];
     }
 

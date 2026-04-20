@@ -2,6 +2,7 @@
 
 namespace App\Services\whatsapp_numbers;
 
+use App\Http\Requests\PaginationRequest;
 use App\Http\Requests\WhatsappNumberStoreRequest;
 use App\Http\Requests\WhatsappNumberUpdateRequest;
 use App\Models\WhatsappNumber;
@@ -22,12 +23,12 @@ class WhatsappNumberService
      * Summary of index
      * Lógica para obtener los números de whatsapp de una empresa con filtros y paginación
      * 
-     * @param \Illuminate\Http\Request $request
+     * @param PaginationRequest $request
      * @param string $companyId
      * @return LengthAwarePaginator
     */
     public static function index(
-        Request $request, 
+        PaginationRequest $request, 
         string $companyId
     ): LengthAwarePaginator
     {

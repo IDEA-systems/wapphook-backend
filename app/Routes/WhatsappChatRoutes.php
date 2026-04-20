@@ -21,26 +21,22 @@ class WhatsappChatRoutes
 
     public static function register(): void
     {
-        Route::prefix('/{companyId}')
-            ->middleware([SessionCompanyMiddleware::class])
-            ->group(function() {
-                Route::middleware([WhatsappChatReadMiddleware::class])
-                    ->get('/whatsapp-chats', [WhatsappChatController::class, 'index']);
+        Route::middleware([WhatsappChatReadMiddleware::class])
+            ->get('/whatsapp-chats', [WhatsappChatController::class, 'index']);
 
-                Route::middleware([WhatsappChatReadMiddleware::class])
-                    ->get('/whatsapp-chats/{id}', [WhatsappChatController::class, 'show']);
+        Route::middleware([WhatsappChatReadMiddleware::class])
+            ->get('/whatsapp-chats/{id}', [WhatsappChatController::class, 'show']);
 
-                Route::middleware([WhatsappChatReadMiddleware::class])
-                    ->get('/whatsapp-chats/{id}/messages', [WhatsappChatController::class, 'messages']);
+        Route::middleware([WhatsappChatReadMiddleware::class])
+            ->get('/whatsapp-chats/{id}/messages', [WhatsappChatController::class, 'messages']);
 
-                Route::middleware([WhatsappChatWriteMiddleware::class])
-                    ->put('/whatsapp-chats/{id}', [WhatsappChatController::class, 'update']);
+        Route::middleware([WhatsappChatWriteMiddleware::class])
+            ->put('/whatsapp-chats/{id}', [WhatsappChatController::class, 'update']);
 
-                Route::middleware([WhatsappChatWriteMiddleware::class])
-                    ->put('/whatsapp-chats/{id}/mark-messages', [WhatsappChatController::class, 'mark']);
+        Route::middleware([WhatsappChatWriteMiddleware::class])
+            ->put('/whatsapp-chats/{id}/mark-messages', [WhatsappChatController::class, 'mark']);
 
-                Route::middleware([WhatsappChatDeleteMiddleware::class])
-                    ->delete('/whatsapp-chats/{id}', [WhatsappChatController::class, 'delete']);
-            });
+        Route::middleware([WhatsappChatDeleteMiddleware::class])
+            ->delete('/whatsapp-chats/{id}', [WhatsappChatController::class, 'delete']);
     }
 }

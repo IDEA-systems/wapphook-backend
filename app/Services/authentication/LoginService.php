@@ -40,7 +40,19 @@ class LoginService
             throw new \Exception('Datos incorrectos', 401);
         }
 
-        $accessToken = $user->createToken('auth_token', ['*'], now()->addDays(7))->plainTextToken;
+        // Esto solo trae el valor de la columna 'ability'
+        // ['*', 'create-posts', 'edit-posts'] sin el nombre del campo 'ability'
+        $abilities = $user->permissions()
+            ->pluck('ability')
+            ->filter(fn ($ability) => is_string($ability) && trim($ability) !== '')
+            ->values()
+            ->toArray();
+
+        if (empty($abilities)) {
+            $abilities = ['*'];
+        }
+
+        $accessToken = $user->createToken('auth_token', $abilities, now()->addDays(7))->plainTextToken;
 
         return [
             'access_token' => $accessToken,

@@ -25,7 +25,10 @@ class ShowWhatsappChatRepository
      * @throws \Exception
      * @return WhatsappChat|null
      */
-    public static function show(string $companyId, string $id): WhatsappChat|null
+    public static function show(
+        string $companyId, 
+        string $id
+    ): WhatsappChat|null
     {
         try {
             return WhatsappChat::where('company_id', $companyId)

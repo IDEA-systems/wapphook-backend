@@ -19,12 +19,17 @@ class CompanyRepository
     /**
      * Summary of index
      * Obtiene una lista de todas las compañías.
+     * @param array $filters
+     * @param array $pagination
      * 
      * @return LengthAwarePaginator
      */
-    public static function index() : LengthAwarePaginator
+    public static function index(
+        array $filters = [], 
+        array $pagination = []
+    ) : LengthAwarePaginator
     {
-        return IndexCompanyRepository::index();
+        return IndexCompanyRepository::index($filters, $pagination);
     }
 
     /**
@@ -60,9 +65,12 @@ class CompanyRepository
      * @param string $id
      * @param array $data
      * @throws \Exception
-     * @return bool|int
+     * @return Company
      */
-    public static function update(string $id, array $data)
+    public static function update(
+        string $id, 
+        array $data
+    ): Company
     {
         return UpdateCompanyRepository::update($id, $data);
     }

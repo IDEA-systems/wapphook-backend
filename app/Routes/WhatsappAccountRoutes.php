@@ -18,23 +18,19 @@ class WhatsappAccountRoutes
 
     public static function register(): void
     {
-        Route::prefix('/{companyId}')
-            ->middleware([SessionCompanyMiddleware::class])
-            ->group(function () {
-                Route::middleware('abilities:whatsapp_accounts.read')
-                    ->get('/whatsapp-accounts', [WhatsappAccountController::class, 'index']);
+        Route::middleware('abilities:whatsapp_accounts.read')
+            ->get('/whatsapp-accounts', [WhatsappAccountController::class, 'index']);
 
-                Route::middleware('abilities:whatsapp_accounts.read')
-                    ->get('/whatsapp-accounts/{id}', [WhatsappAccountController::class, 'show']);
+        Route::middleware('abilities:whatsapp_accounts.read')
+            ->get('/whatsapp-accounts/{id}', [WhatsappAccountController::class, 'show']);
 
-                Route::middleware('abilities:whatsapp_accounts.write')
-                    ->post('/whatsapp-accounts', [WhatsappAccountController::class, 'store']);
+        Route::middleware('abilities:whatsapp_accounts.write')
+            ->post('/whatsapp-accounts', [WhatsappAccountController::class, 'store']);
 
-                Route::middleware('abilities:whatsapp_accounts.write')
-                    ->put('/whatsapp-accounts/{id}', [WhatsappAccountController::class, 'update']);
+        Route::middleware('abilities:whatsapp_accounts.write')
+            ->put('/whatsapp-accounts/{id}', [WhatsappAccountController::class, 'update']);
 
-                Route::middleware('abilities:whatsapp_accounts.delete')
-                    ->delete('/whatsapp-accounts/{id}', [WhatsappAccountController::class, 'delete']);
-            });
+        Route::middleware('abilities:whatsapp_accounts.delete')
+            ->delete('/whatsapp-accounts/{id}', [WhatsappAccountController::class, 'delete']);
     }
 }

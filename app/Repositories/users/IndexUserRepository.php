@@ -42,7 +42,8 @@ class IndexUserRepository
             $query->where('company_id', $companyId);
 
             if (isset($filters['params'])) {
-                $query->where('name', 'like', '%' . $filters['name'] . '%');
+                $query->where('name', 'like', '%' . $filters['name'] . '%')
+                    ->orWhere('email', 'like', '%' . $filters['name'] . '%');
             }
 
             return $query->orderBy($sort, $order)

@@ -24,10 +24,10 @@ class IndexWhatsappMessageRepository
     ) : LengthAwarePaginator
     {
         try {
-            $page = $pagination['page'] ?? 1;
-            $rows = $pagination['rows'] ?? 10;
-            $sort = $pagination['sort'] ?? 'created_at';
-            $order = $pagination['order'] ?? 'desc';
+            $page = $pagination['page'];
+            $rows = $pagination['rows'];
+            $sort = $pagination['sort'];
+            $order = $pagination['order'];
 
             $query = WhatsappMessage::query();
             

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PaginationRequest;
 use App\Services\logs\LogService;
 use App\Services\whatsapp_messages\WhatsappMessageService;
 use Illuminate\Http\JsonResponse;
@@ -13,12 +14,12 @@ class WhatsappMessageController extends Controller
      * Summary of index
      * Obtener los mensajes de whatsapp de un chat y una compañía, con filtros y paginación.
      * 
-     * @param Request $request
+     * @param PaginationRequest $request
      * @param string $companyId
      * @return JsonResponse
      */
     public static function index(
-        Request $request, 
+        PaginationRequest $request, 
         string $companyId
     ): JsonResponse
     {
@@ -26,7 +27,8 @@ class WhatsappMessageController extends Controller
             $response = WhatsappMessageService::index($request, $companyId);
 
             return response()->json([
-                'title' => 'Whatsapp messages',
+                'status' => 200,
+                'title' => 'Completado',
                 'details' => 'Lista de mensajes de whatsapp',
                 'data' => $response
             ], 200);
@@ -36,6 +38,7 @@ class WhatsappMessageController extends Controller
             LogService::error("WhatsappMessageController@index: $message");
 
             return response()->json([
+                'status' => $code,
                 'name' => 'Whatsapp messages',
                 'message' => $message
             ], $code);
@@ -61,7 +64,8 @@ class WhatsappMessageController extends Controller
             $response = WhatsappMessageService::show($companyId, $id);
 
             return response()->json([
-                'title' => 'Whatsapp message',
+                'status' => 200,
+                'title' => 'Completado',
                 'details' => 'Detalle de mensaje de whatsapp',
                 'data' => $response
             ], 200);
@@ -71,6 +75,7 @@ class WhatsappMessageController extends Controller
             LogService::error("WhatsappMessageController@show: $message");
 
             return response()->json([
+                'status' => $code,
                 'name' => 'Whatsapp message',
                 'message' => $message
             ], $code);
@@ -94,7 +99,8 @@ class WhatsappMessageController extends Controller
             WhatsappMessageService::send($request, $companyId);
 
             return response()->json([
-                'title' => 'Whatsapp message',
+                'status' => 200,
+                'title' => 'Completado',
                 'details' => 'Mensaje de whatsapp creado'
             ], 200);
         } catch (\Exception $error) {
@@ -103,6 +109,7 @@ class WhatsappMessageController extends Controller
             LogService::error("WhatsappMessageController@send: $message");
 
             return response()->json([
+                'status' => $code,
                 'name' => 'Whatsapp message',
                 'message' => $message
             ], $code);
@@ -128,7 +135,8 @@ class WhatsappMessageController extends Controller
             WhatsappMessageService::update($request, $companyId, $id);
 
             return response()->json([
-                'title' => 'Whatsapp message',
+                'status' => 200,
+                'title' => 'Completado',
                 'details' => 'Mensaje de whatsapp actualizado'
             ], 200);
         } catch (\Exception $error) {
@@ -137,6 +145,7 @@ class WhatsappMessageController extends Controller
             LogService::error("WhatsappMessageController@update: $message");
 
             return response()->json([
+                'status' => $code,
                 'name' => 'Whatsapp message',
                 'message' => $message
             ], $code);
@@ -162,15 +171,17 @@ class WhatsappMessageController extends Controller
             WhatsappMessageService::delete($companyId, $id);
 
             return response()->json([
-                'title' => 'Whatsapp message',
+                'status' => 204,
+                'title' => 'Completado',
                 'details' => 'Mensaje de whatsapp eliminado'
-            ], 200);
+            ], 204);
         } catch (\Exception $error) {
             $code = $error->getCode() ?: 500;
             $message = $error->getMessage();
             LogService::error("WhatsappMessageController@delete: $message");
 
             return response()->json([
+                'status' => $code,
                 'name' => 'Whatsapp message',
                 'message' => $message
             ], $code);

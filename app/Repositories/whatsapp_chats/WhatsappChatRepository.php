@@ -80,15 +80,17 @@ class WhatsappChatRepository
      * 
      * @param string $companyId
      * @param array $filters
+     * @param array $pagination
      * @return LengthAwarePaginator
+     * @throws \Exception
      */
     public static function index(
         string $companyId, 
         array $filters = [], 
-        array $paginate = []
+        array $pagination = []
     ): LengthAwarePaginator
     {
-        return IndexWhatsappChatRepository::index($companyId, $filters, $paginate);
+        return IndexWhatsappChatRepository::index($companyId, $filters, $pagination);
     }
     
     /**

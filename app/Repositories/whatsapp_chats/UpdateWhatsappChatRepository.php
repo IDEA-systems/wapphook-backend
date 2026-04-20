@@ -16,14 +16,22 @@ class UpdateWhatsappChatRepository
      * @param string $id ID del chat de whatsapp a actualizar
      * @param array $data Datos a actualizar en el chat de whatsapp
      * @throws \Exception
-     * @return void
+     * @return WhatsappChat
      */
-    public static function update(string $companyId, string $id, array $data): void
+    public static function update(
+        string $companyId, 
+        string $id, 
+        array $data
+    ): WhatsappChat
     {
         try {
-            WhatsappChat::where('company_id', $companyId)
+            $whatsappChat = WhatsappChat::where('company_id', $companyId)
                 ->where('id', $id)
-                ->update($data);
+                ->first();
+
+            $whatsappChat->update($data);
+
+            return $whatsappChat;
         } catch (\Exception $error) {
             $message = $error->getMessage();
             LogService::error("UpdateWhatsappChatRepository@update: $message");

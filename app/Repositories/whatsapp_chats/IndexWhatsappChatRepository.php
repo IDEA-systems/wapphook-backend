@@ -23,21 +23,21 @@ class IndexWhatsappChatRepository
      * 
      * @param string $companyId
      * @param array $filters
-     * @param array $paginate
+     * @param array $pagination
      * @return LengthAwarePaginator
      */
     public static function index(
         string $companyId = null,
         array $filters = [], 
-        array $paginate = []
+        array $pagination = []
     ) : LengthAwarePaginator
     {
         try {
 
-            $rows = $paginate['rows'] ?? 10;
-            $page = $paginate['page'] ?? 1;
-            $sort = $paginate['sort'] ?? 'created_at';
-            $order = $paginate['order'] ?? 'desc';
+            $rows = $pagination['rows'];
+            $page = $pagination['page'];
+            $sort = $pagination['sort'];
+            $order = $pagination['order'];
 
             $query = WhatsappChat::query();
 

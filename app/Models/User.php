@@ -68,6 +68,16 @@ class User extends Model
     }
 
     /**
+     * Relación con los permisos del usuario.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function permissions()
+    {
+        return $this->hasMany(Permission::class, 'user_id', 'id');
+    }
+
+    /**
      * Verificar la contraseña del usuario.
      *
      * @param string $password La contraseña a verificar.

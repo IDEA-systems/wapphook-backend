@@ -24,7 +24,10 @@ class ShowVerifyTokenRepository
      * @throws \Exception
      * @return VerifyToken|null
      */
-    public static function show(string $companyId, string $id) : VerifyToken|null
+    public static function show(
+        string $companyId, 
+        string $id
+    ): VerifyToken|null
     {
         try {
             return VerifyToken::where('company_id', $companyId)

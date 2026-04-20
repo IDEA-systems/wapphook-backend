@@ -16,17 +16,26 @@ class IndexWhatsappMessageChatRepository
         //
     }
 
+    /**
+     * Summary of index
+     * Obtiene los mensajes de whatsapp de un chat y una compañía, con filtros y paginación.
+     * 
+     * @param string $companyId
+     * @param array $filters
+     * @param array $pagination
+     * @return \Illuminate\Pagination\LengthAwarePaginator
+     */
     public static function index(
         string $companyId,
         array $filters = [], 
-        array $params = []
+        array $pagination = []
     ): LengthAwarePaginator
     {
         try {
-            $rows = $params['rows'] ?? 10;
-            $page = $params['page'] ?? 1;
-            $sort = $params['sort'] ?? 'created_at';
-            $order = $params['order'] ?? 'desc';
+            $rows = $pagination['rows'];
+            $page = $pagination['page'];
+            $sort = $pagination['sort'];
+            $order = $pagination['order'];
 
             $query = WhatsappMessage::query();
             

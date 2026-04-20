@@ -15,6 +15,16 @@ class DeleteVerifyTokenRepository
         //
     }
 
+    /**
+     * Summary of delete
+     * Elimina un token de verificación por su ID y el ID de la compañía.
+     * A este punto ya se valido si existe en el servicio, por lo que se asume que el token existe.
+     * 
+     * @param string $companyId
+     * @param string $id
+     * @throws \Exception
+     * @return void
+     */
     public static function delete(string $companyId, string $id): void
     {
         try {

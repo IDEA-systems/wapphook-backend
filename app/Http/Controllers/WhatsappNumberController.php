@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PaginationRequest;
 use App\Http\Requests\WhatsappNumberStoreRequest;
 use App\Http\Requests\WhatsappNumberUpdateRequest;
-use App\Services\logs\LogService;
 use App\Services\whatsapp_numbers\WhatsappNumberService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use App\Services\logs\LogService;
 
 class WhatsappNumberController extends Controller
 {
@@ -15,12 +16,12 @@ class WhatsappNumberController extends Controller
      * Summary of index
      * Obtener los numeros de telefono de cuentas de whatsapp de una empresa
      * 
-     * @param Request $request
+     * @param PaginationRequest $request
      * @param string $companyId
      * @return JsonResponse
      */
     public static function index(
-        Request $request, 
+        PaginationRequest $request, 
         string $companyId
     ): JsonResponse
     {
@@ -40,8 +41,8 @@ class WhatsappNumberController extends Controller
 
             return response()->json([
                 "status" => $code,
-                "title" => "Ocurrió un error",
-                "details" => $message
+                "name" => "Whatsapp numbers",
+                "message" => $message
             ], $code);
         }
     }
@@ -77,8 +78,8 @@ class WhatsappNumberController extends Controller
 
             return response()->json([
                 "status" => $code,
-                "title" => "Ocurrió un error",
-                "details" => $message
+                "name" => "Whatsapp numbers",
+                "message" => $message
             ], $code);
         }
     }
@@ -112,8 +113,8 @@ class WhatsappNumberController extends Controller
 
             return response()->json([
                 "status" => $code,
-                "title" => "Ocurrió un error",
-                "details" => $message
+                "name" => "Whatsapp numbers",
+                "message" => $message
             ], $code);
         }
     }
@@ -139,8 +140,8 @@ class WhatsappNumberController extends Controller
 
             return response()->json([
                 "status" => $code,
-                "title" => "Ocurrió un error",
-                "details" => $message
+                "name" => "Whatsapp numbers",
+                "message" => $message
             ], $code);
         }
     }
@@ -175,8 +176,8 @@ class WhatsappNumberController extends Controller
 
             return response()->json([
                 "status" => $code,
-                "title" => "Ocurrió un error",
-                "details" => $message
+                "name" => "Whatsapp numbers",
+                "message" => $message
             ], $code);
         }
     }

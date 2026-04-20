@@ -18,19 +18,28 @@ class UpdateVerifyTokenRepository
     /**
      * Summary of update
      * Actualiza un token de verificación por su ID y el ID de la compañía con los datos proporcionados.
+     * A este punto ya se valido si existe en el servicio, por lo que se asume que el token existe.
      * 
      * @param string $companyId
      * @param string $id
      * @param array $data
      * @throws \Exception
-     * @return bool|null
+     * @return VerifyToken
      */
-    public static function update(string $companyId, string $id, array $data) : bool|null
+    public static function update(
+        string $companyId, 
+        string $id, 
+        array $data
+    ): VerifyToken
     {
         try {
-            return VerifyToken::where('company_id', $companyId)
+            $verifyToken = VerifyToken::where('company_id', $companyId)
                 ->where('id', $id)
-                ->update($data);
+                ->first();
+
+            $verifyToken->update($data);
+
+            return $verifyToken;
         } catch (\Exception $error) {
             $errorMessage = $error->getMessage();
             LogService::error("UpdateVerifyTokenRepository@update: $errorMessage");

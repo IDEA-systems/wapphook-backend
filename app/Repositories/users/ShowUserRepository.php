@@ -20,17 +20,18 @@ class ShowUserRepository
      * Obtener los detalles de un usuario por su ID.
      * 
      * @param string $companyId
-     * @param string $userId
+     * @param string $id
      * @return User|null
      */
     public static function show(
         string $companyId, 
-        string $userId
+        string $id
     ): User|null
     {
         try {
            return User::where('company_id', $companyId)
-                ->where('id', $userId)->first();
+                ->where('id', $id)
+                ->first();
         } catch (\Exception $error) {
             $message = $error->getMessage();
             LogService::error("ShowUser@show: $message");

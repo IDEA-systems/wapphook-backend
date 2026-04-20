@@ -20,20 +20,24 @@ class UpdateUserRepository
     * Actualizar los detalles de un usuario.
     * 
     * @param string $companyId
-    * @param string $userId
+    * @param string $id
     * @param array $data
-    * @return bool|int
+    * @return User
     */
     public static function update(
         string $companyId, 
-        string $userId, 
+        string $id, 
         array $data
-    ): bool|int
+    ): User
     {
         try {
-            return User::where('company_id', $companyId)
-                ->where('id', $userId)
-                ->update($data);
+            $userModel = User::where('company_id', $companyId)
+                ->where('id', $id)
+                ->first();
+
+            $userModel->update($data);
+            
+            return $userModel;
         } catch (\Exception $error) {
             $message = $error->getMessage();
             LogService::error("UpdateUser@update: $message");

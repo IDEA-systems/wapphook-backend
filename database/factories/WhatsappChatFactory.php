@@ -19,7 +19,7 @@ class WhatsappChatFactory extends Factory
      */
     public function definition(): array
     {
-        $phoneNumber = $this->faker->phoneNumber();
+        $phoneNumber = str_ireplace(['+', ' ', '-', '.', '(', ')', ','], '', $this->faker->phoneNumber());
         $id = "CHAT-$phoneNumber";
 
         return [

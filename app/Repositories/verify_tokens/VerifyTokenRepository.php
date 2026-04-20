@@ -22,9 +22,13 @@ class VerifyTokenRepository
      * 
      * @return LengthAwarePaginator
      */
-    public static function index(string $companyId, array $filters = [], array $params = []): LengthAwarePaginator
+    public static function index(
+        string $companyId, 
+        array $filters = [], 
+        array $pagination = []
+    ): LengthAwarePaginator
     {
-        return IndexVerifyTokenRepository::index($companyId, $filters, $params);
+        return IndexVerifyTokenRepository::index($companyId, $filters, $pagination);
     }
 
     /**
@@ -36,7 +40,10 @@ class VerifyTokenRepository
      * @return VerifyToken|null
      * @throws \Exception
      */
-    public static function show(string $companyId, string $id): VerifyToken|null
+    public static function show(
+        string $companyId, 
+        string $id
+    ): VerifyToken|null
     {
         return ShowVerifyTokenRepository::show($companyId, $id);
     }
@@ -63,10 +70,14 @@ class VerifyTokenRepository
      * @param string $companyId
      * @param string $id
      * @param array $data
-     * @return bool|int
+     * @return VerifyToken
      * @throws \Exception
      */
-    public static function update(string $companyId, string $id, array $data): bool|int
+    public static function update(
+        string $companyId,
+        string $id, 
+        array $data
+    ): VerifyToken
     {
         return UpdateVerifyTokenRepository::update($companyId, $id, $data);
     }

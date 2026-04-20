@@ -2,6 +2,7 @@
 
 namespace App\Services\whatsapp_chats;
 
+use App\Http\Requests\PaginationRequest;
 use App\Support\ConstantSupport;
 use Illuminate\Http\Request;
 use App\Models\WhatsappChat;
@@ -56,13 +57,13 @@ class WhatsappChatService
      * Summary of messages
      * Obtener los mensajes de un chat de WhatsApp específico con filtros y paginación.
      * 
-     * @param Request $request
+     * @param PaginationRequest $request
      * @param string $companyId
      * @param string $id
      * @return LengthAwarePaginator
      */
     public static function messages(
-        Request $request, 
+        PaginationRequest $request, 
         string $companyId, 
         string $id
     ): LengthAwarePaginator
@@ -74,12 +75,12 @@ class WhatsappChatService
      * Summary of index
      * Obtener una lista de chats de WhatsApp con paginación, filtrado y ordenamiento.
      * 
-     * @param Request $request
+     * @param PaginationRequest $request
      * @param string $companyId
      * @return LengthAwarePaginator
      */
     public static function index(
-        Request $request, 
+        PaginationRequest $request, 
         string $companyId
     ): LengthAwarePaginator
     {

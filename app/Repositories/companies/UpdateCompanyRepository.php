@@ -22,12 +22,14 @@ class UpdateCompanyRepository
      * @param string $id
      * @param array $data
      * @throws \Exception
-     * @return bool|int
+     * @return Company
      */
-    public static function update(string $id, array $data): bool|int
+    public static function update(string $id, array $data): Company
     {
         try {
-            return Company::where('id', $id)->update($data);
+            $company = Company::where('id', $id)->first();
+            $company->update($data);
+            return $company;
         } catch (\Exception $error) {
             $errorMessage = $error->getMessage();
             LogService::error("UpdateCompanyRepository@update: $errorMessage");

@@ -21,22 +21,22 @@ class IndexCompanyRepository
      * Obtiene una lista paginada de compañías, con la posibilidad de aplicar filtros y ordenamientos.
      * 
      * @param array $filters
-     * @param array $params
+     * @param array $pagination
      * @throws \Exception
      * @return LengthAwarePaginator
      */
-    public static function index(array $filters = [], array $params = []) : LengthAwarePaginator
+    public static function index(array $filters = [], array $pagination = []) : LengthAwarePaginator
     {
         try {
-            $rows = $params['rows'] ?? 10;
-            $page = $params['page'] ?? 1;
-            $sort = $params['sort'] ?? 'created_at';
-            $order = $params['order'] ?? 'desc';
+            $rows = $pagination['rows'];
+            $page = $pagination['page'];
+            $sort = $pagination['sort'];
+            $order = $pagination['order'];
 
             $query = Company::query();
             
-            foreach ($filters as $field => $value) {
-                $query->where($field, 'like', '%' . $value . '%');
+            if (isset($filters['params'])) {
+                $query->where('name', 'like', '%' . $filters['params'] . '%');
             }
             
             return $query->orderBy($sort, $order)

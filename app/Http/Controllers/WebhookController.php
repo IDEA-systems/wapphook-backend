@@ -26,18 +26,15 @@ class WebhookController extends Controller
     {
         try {
             $response = WebhookService::suscribe($request, $companyId);
-
-            return response($response, 200, [
-                'Content-Type' => 'text/plain'
-            ]);
+            $headers = ['Content-Type' => 'text/plain'];
+            return response($response, 200, $headers);
         } catch (\Exception $error) {
             $code = $error->getCode() ?: 403;
             $message = $error->getMessage();
+            $headers = ['Content-Type' => 'text/plain'];
             LogService::error("WebhookController@suscribe: $message");
             
-            return response($message, $code, [
-                'Content-Type' => 'text/plain'
-            ]);
+            return response($message, $code, $headers);
         }
     }
 
@@ -61,7 +58,7 @@ class WebhookController extends Controller
             LogService::error("WebhookController@receive: {$message}");
             
             return response()->json([
-                "name" => "WebhookReceiveError",
+                "name" => "Webhook",
                 "message" => "Error al procesar el webhook",
             ], $code);
         }
