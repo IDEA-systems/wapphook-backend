@@ -42,7 +42,7 @@ return [
     | 'allowed_origins' => ['https://example.com', 'https://anotherdomain.com'],
     |
     */
-    'allowed_origins' => array_filter(explode(',', env('CORS_ALLOWED_ORIGINS', ''))),
+    'allowed_origins' => array_filter(explode(',', env('CORS_ALLOWED_ORIGINS', '*'))),
 
     /*
     |--------------------------------------------------------------------------
