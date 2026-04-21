@@ -52,7 +52,7 @@ class LoginService
             $abilities = ['*'];
         }
 
-        $accessToken = $user->createToken('auth_token', $abilities, now()->addDays(7))->plainTextToken;
+        $accessToken = $user->createToken('auth_token', $abilities, now()->addDays(1))->plainTextToken;
 
         return [
             'access_token' => $accessToken,

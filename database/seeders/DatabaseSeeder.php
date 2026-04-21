@@ -13,6 +13,7 @@ use App\Models\WhatsappMessage;
 use App\Models\WhatsappNumber;
 use App\Models\WhatsappResponse;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use Faker\Factory;
 
 class DatabaseSeeder extends Seeder
@@ -22,177 +23,366 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $faker = Factory::create('es_MX');
-        
-        $abilities = [
-            'applications.read', 
-            'applications.write', 
-            'applications.delete',
-            'personal_access_tokens.read',
-            'personal_access_tokens.write',
-            'personal_access_tokens.delete',
-            'companies.read',
-            'companies.write',
-            'companies.delete',
-            'users.read',
-            'users.write',
-            'users.delete',
-            'verify_tokens.read',
-            'verify_tokens.write',
-            'verify_tokens.delete',
-            'whatsapp_accounts.read',
-            'whatsapp_accounts.write',
-            'whatsapp_accounts.delete',
-            'whatsapp_numbers.read',
-            'whatsapp_numbers.write',
-            'whatsapp_numbers.delete',
-            'whatsapp_chats.read',
-            'whatsapp_chats.write',
-            'whatsapp_chats.delete',
-            'whatsapp_messages.read',
-            'whatsapp_messages.write',
-            'whatsapp_messages.delete',
-        ];
+        // $faker = Factory::create('es_MX');
 
-        \DB::table('companies')->insert([
-            [
-                'id' => $faker->uuid(),
-                'name' => $faker->company(),
-                'email' => $faker->unique()->email()
-            ],
-            [
-                'id' => $faker->uuid(),
-                'name' => $faker->company(),
-                'email' => $faker->unique()->email()
-            ],
-            [
-                'id' => $faker->uuid(),
-                'name' => $faker->company(),
-                'email' => $faker->unique()->email()
-            ],
-            [
-                'id' => $faker->uuid(),
-                'name' => $faker->company(),
-                'email' => $faker->unique()->email()
-            ],
-            [
-                'id' => $faker->uuid(),
-                'name' => $faker->company(),
-                'email' => $faker->unique()->email()
-            ]
-        ]);
+        // \DB::table('companies')->insert([
+        //     [
+        //         'id' => $faker->unique()->uuid(),
+        //         'name' => $faker->company(),
+        //         'email' => $faker->unique()->email()
+        //     ],
+        //     [
+        //         'id' => $faker->unique()->uuid(),
+        //         'name' => $faker->company(),
+        //         'email' => $faker->unique()->email()
+        //     ],
+        //     [
+        //         'id' => $faker->unique()->uuid(),
+        //         'name' => $faker->company(),
+        //         'email' => $faker->unique()->email()
+        //     ],
+        //     [
+        //         'id' => $faker->unique()->uuid(),
+        //         'name' => $faker->company(),
+        //         'email' => $faker->unique()->email()
+        //     ],
+        //     [
+        //         'id' => $faker->unique()->uuid(),
+        //         'name' => $faker->company(),
+        //         'email' => $faker->unique()->email()
+        //     ]
+        // ]);
 
-        $companies = Company::all();
+        // $companies = Company::all();
 
-        foreach($companies as $company) {
-            \DB::table('users')->insert([
-                [
-                    'company_id' => $company->id,
-                    'name' => $faker->firstName() . " " . $faker->lastName(),
-                    'email' => $faker->unique()->email(),
-                    'password' => 'admin'
-                ],
-                [
-                    'company_id' => $company->id,
-                    'name' => $faker->firstName() . " " . $faker->lastName(),
-                    'email' => $faker->unique()->email(),
-                    'password' => 'admin'
-                ],
-                [
-                    'company_id' => $company->id,
-                    'name' => $faker->firstName() . " " . $faker->lastName(),
-                    'email' => $faker->unique()->email(),
-                    'password' => 'admin'
-                ],
-                [
-                    'company_id' => $company->id,
-                    'name' => $faker->firstName() . " " . $faker->lastName(),
-                    'email' => $faker->unique()->email(),
-                    'password' => 'admin'
-                ],
-                [
-                    'company_id' => $company->id,
-                    'name' => $faker->firstName() . " " . $faker->lastName(),
-                    'email' => $faker->unique()->email(),
-                    'password' => 'admin'
-                ]
-            ]);
+        // foreach($companies as $company) {
+        //     \DB::table('users')->insert([
+        //         [
+        //             'id' => $faker->unique()->uuid(),
+        //             'company_id' => $company->id,
+        //             'name' => $faker->firstName() . " " . $faker->lastName(),
+        //             'email' => $faker->unique()->email(),
+        //             'password' => Hash::make('admin')
+        //         ],
+        //         [
+        //             'id' => $faker->unique()->uuid(),
+        //             'company_id' => $company->id,
+        //             'name' => $faker->firstName() . " " . $faker->lastName(),
+        //             'email' => $faker->unique()->email(),
+        //             'password' => Hash::make('admin')
+        //         ],
+        //         [
+        //             'id' => $faker->unique()->uuid(),
+        //             'company_id' => $company->id,
+        //             'name' => $faker->firstName() . " " . $faker->lastName(),
+        //             'email' => $faker->unique()->email(),
+        //             'password' => Hash::make('admin')
+        //         ],
+        //         [
+        //             'id' => $faker->unique()->uuid(),
+        //             'company_id' => $company->id,
+        //             'name' => $faker->firstName() . " " . $faker->lastName(),
+        //             'email' => $faker->unique()->email(),
+        //             'password' => Hash::make('admin')
+        //         ],
+        //         [
+        //             'id' => $faker->unique()->uuid(),
+        //             'company_id' => $company->id,
+        //             'name' => $faker->firstName() . " " . $faker->lastName(),
+        //             'email' => $faker->unique()->email(),
+        //             'password' => Hash::make('admin')
+        //         ]
+        //     ]);
 
-            $users = User::all();
+        //     \DB::table('applications')->insert([
+        //         [
+        //             'id' => (string) $faker->randomNumber(9, true),
+        //             'company_id' => $company->id,
+        //             'name' => $faker->name()
+        //         ],
+        //         [
+        //             'id' => (string) $faker->randomNumber(9, true),
+        //             'company_id' => $company->id,
+        //             'name' => $faker->name()
+        //         ]
+        //     ]);
+        // }
 
-            foreach($users as $user) {
-                foreach ($abilities as $ability) {
-                    \DB::table('permissions')->insert([
-                        'user_id' => $user->id,
-                        'ability' => $ability,
-                    ]);
-                }
-            }
+        // $users = User::all();
 
-            \DB::table('applications')->insert([
-                [
-                    'id' => (string) $faker->randomNumber(9, true),
-                    'company_id' => $company->id,
-                    'name' => $faker->name()
-                ],
-                [
-                    'id' => (string) $faker->randomNumber(9, true),
-                    'company_id' => $company->id,
-                    'name' => $faker->name()
-                ]
-            ]);
+        // foreach($users as $user) {
+        //     \DB::table('permissions')->insert([
+        //         [
+        //             'user_id' => $user->id,
+        //             'ability' => 'applications.read',
+        //         ],
+        //         [ 
+        //             'user_id' => $user->id,
+        //             'ability' => 'applications.write',
+        //         ],
+        //         [ 
+        //             'user_id' => $user->id,
+        //             'ability' => 'applications.delete',
+        //         ],
+        //         [
+        //             'user_id' => $user->id,
+        //             'ability' => 'personal_access_tokens.read',
+        //         ],
+        //         [
+        //             'user_id' => $user->id,
+        //             'ability' => 'personal_access_tokens.write',
+        //         ],
+        //         [
+        //             'user_id' => $user->id,
+        //             'ability' => 'personal_access_tokens.delete',
+        //         ],
+        //         [
+        //             'user_id' => $user->id,
+        //             'ability' => 'companies.read',
+        //         ],
+        //         [
+        //             'user_id' => $user->id,
+        //             'ability' => 'companies.write',
+        //         ],
+        //         [
+        //             'user_id' => $user->id,
+        //             'ability' => 'companies.delete',
+        //         ],
+        //         [
+        //             'user_id' => $user->id,
+        //             'ability' => 'users.read',
+        //         ],
+        //         [
+        //             'user_id' => $user->id,
+        //             'ability' => 'users.write',
+        //         ],
+        //         [
+        //             'user_id' => $user->id,
+        //             'ability' => 'users.delete',
+        //         ],
+        //         [
+        //             'user_id' => $user->id,
+        //             'ability' => 'verify_tokens.read',
+        //         ],
+        //         [
+        //             'user_id' => $user->id,
+        //             'ability' => 'verify_tokens.write',
+        //         ],
+        //         [
+        //             'user_id' => $user->id,
+        //             'ability' => 'verify_tokens.delete',
+        //         ],
+        //         [
+        //             'user_id' => $user->id,
+        //             'ability' => 'whatsapp_accounts.read',
+        //         ],
+        //         [
+        //             'user_id' => $user->id,
+        //             'ability' => 'whatsapp_accounts.write',
+        //         ],
+        //         [
+        //             'user_id' => $user->id,
+        //             'ability' => 'whatsapp_accounts.delete',
+        //         ],
+        //         [
+        //             'user_id' => $user->id,
+        //             'ability' => 'whatsapp_numbers.read',
+        //         ],
+        //         [
+        //             'user_id' => $user->id,
+        //             'ability' => 'whatsapp_numbers.write',
+        //         ],
+        //         [
+        //             'user_id' => $user->id,
+        //             'ability' => 'whatsapp_numbers.delete',
+        //         ],
+        //         [
+        //             'user_id' => $user->id,
+        //             'ability' => 'whatsapp_chats.read',
+        //         ],
+        //         [
+        //             'user_id' => $user->id,
+        //             'ability' => 'whatsapp_chats.write',
+        //         ],
+        //         [
+        //             'user_id' => $user->id,
+        //             'ability' => 'whatsapp_chats.delete',
+        //         ],
+        //         [
+        //             'user_id' => $user->id,
+        //             'ability' => 'whatsapp_messages.read',
+        //         ],
+        //         [
+        //             'user_id' => $user->id,
+        //             'ability' => 'whatsapp_messages.write',
+        //         ],
+        //         [
+        //             'user_id' => $user->id,
+        //             'ability' => 'whatsapp_messages.delete',
+        //         ],
+        //     ]);
+        // }
 
-            $applications = Application::all();
+        // $applications = Application::all();
 
-            foreach($applications as $app) {
-                VerifyToken::factory()->create([
-                    'company_id' => $company->id,
-                    'application_id' => $app->id,
-                ]);
+        // foreach($applications as $app) {
+        //     \DB::table('verify_tokens')->insert([
+        //         [
+        //             'id' => $faker->unique()->uuid(),
+        //             'company_id' => $app->company_id,
+        //             'application_id' => $app->id,
+        //         ],
+        //         [
+        //             'id' => $faker->unique()->uuid(),
+        //             'company_id' => $app->company_id,
+        //             'application_id' => $app->id,
+        //         ]
+        //     ]);
 
-                $accounts = WhatsappAccount::factory()->create([
-                   'id' => (string) $faker->randomNumber(9, true),
-                    'company_id' => $company->id,
-                    'application_id' => $app->id,
-                    'name' => $faker->firstName,
-                ]);
+        //     \DB::table('whatsapp_accounts')->insert([
+        //         [
+        //             'id' => (string) $faker->randomNumber(9, true),
+        //             'company_id' => $app->company_id,
+        //             'application_id' => $app->id,
+        //             'name' => $faker->firstName,
+        //         ],
+        //         [
+        //             'id' => (string) $faker->randomNumber(9, true),
+        //             'company_id' => $app->company_id,
+        //             'application_id' => $app->id,
+        //             'name' => $faker->firstName,
+        //         ]
+        //     ]); 
+        // }
 
-                foreach($accounts as $account) {
-                    $numbers = WhatsappNumber::factory()->create([
-                        'id' => (string) $faker->randomNumber(9, true),
-                        'company_id' => $company->id,
-                        'whatsapp_account_id' => $account->id,
-                        'name_visible' => $faker->unique()->firstNameFemale(),
-                        'phone_number' => $faker->phoneNumber(),
-                        'api_key' => $faker->uuid(),
-                        'pin' => $faker->randomNumber()
-                    ]);
+        // $accounts = WhatsappAccount::all();
 
-                    foreach($numbers as $number) {
-                        $phoneNumber = str_ireplace(['+', ' ', '-', '.', '(', ')', ','], '', $faker->phoneNumber());
-                        $id = "CHAT-$phoneNumber";
+        // foreach($accounts as $account) {
+        //     \DB::table('whatsapp_numbers')->insert([
+        //         [
+        //             'id' => (string) $faker->randomNumber(9, true),
+        //             'company_id' => $account->company_id,
+        //             'whatsapp_account_id' => $account->id,
+        //             'name_visible' => $faker->unique()->firstNameFemale(),
+        //             'phone_number' => $faker->phoneNumber(),
+        //             'api_key' => $faker->unique()->uuid(),
+        //             'pin' => $faker->randomNumber()
+        //         ],
+        //         [
+        //             'id' => (string) $faker->randomNumber(9, true),
+        //             'company_id' => $account->company_id,
+        //             'whatsapp_account_id' => $account->id,
+        //             'name_visible' => $faker->unique()->firstNameFemale(),
+        //             'phone_number' => $faker->phoneNumber(),
+        //             'api_key' => $faker->unique()->uuid(),
+        //             'pin' => $faker->randomNumber()
+        //         ]
+        //     ]);
+        // }
 
-                        $chats = WhatsappChat::factory()->create([
-                            "id" => $id,
-                            'whatsapp_number_id' => $number->id,
-                            'company_id' => $company->id,
-                            'from' => $phoneNumber
-                        ]);
+        // $numbers = WhatsappNumber::all();
 
-                        foreach($chats as $chat) {
-                            WhatsappMessage::factory()->create([
-                                'company_id' => $company->id,
-                                'whatsapp_chat_id' => $chat->id,
-                                'type' => 'text',
-                                'badge' => 'input',
-                                'text' => $faker->text(),
-                                'status' => 'unread',
-                            ]);
-                        }
-                    }
-                }
-            }
-        }
+        // foreach($numbers as $number) {
+        //     \DB::table('whatsapp_chats')->insert([
+        //         [
+        //             "id" => "CHAT-".str_ireplace(['+', ' ', '-', '.', '(', ')', ','], '', $faker->unique()->phoneNumber()),
+        //             'whatsapp_number_id' => $number->id,
+        //             'company_id' => $number->company_id,
+        //             'from' => str_ireplace(['+', ' ', '-', '.', '(', ')', ','], '', $faker->unique()->phoneNumber())
+        //         ],
+        //         [
+        //             "id" => "CHAT-".str_ireplace(['+', ' ', '-', '.', '(', ')', ','], '', $faker->unique()->phoneNumber()),
+        //             'whatsapp_number_id' => $number->id,
+        //             'company_id' => $number->company_id,
+        //             'from' => str_ireplace(['+', ' ', '-', '.', '(', ')', ','], '', $faker->unique()->phoneNumber())
+        //         ],
+        //         [
+        //             "id" => "CHAT-".str_ireplace(['+', ' ', '-', '.', '(', ')', ','], '', $faker->unique()->phoneNumber()),
+        //             'whatsapp_number_id' => $number->id,
+        //             'company_id' => $number->company_id,
+        //             'from' => str_ireplace(['+', ' ', '-', '.', '(', ')', ','], '', $faker->unique()->phoneNumber())
+        //         ],
+        //         [
+        //             "id" => "CHAT-".str_ireplace(['+', ' ', '-', '.', '(', ')', ','], '', $faker->unique()->phoneNumber()),
+        //             'whatsapp_number_id' => $number->id,
+        //             'company_id' => $number->company_id,
+        //             'from' => str_ireplace(['+', ' ', '-', '.', '(', ')', ','], '', $faker->unique()->phoneNumber())
+        //         ],
+        //         [
+        //             "id" => "CHAT-".str_ireplace(['+', ' ', '-', '.', '(', ')', ','], '', $faker->unique()->phoneNumber()),
+        //             'whatsapp_number_id' => $number->id,
+        //             'company_id' => $number->company_id,
+        //             'from' => str_ireplace(['+', ' ', '-', '.', '(', ')', ','], '', $faker->unique()->phoneNumber())
+        //         ],
+        //         [
+        //             "id" => "CHAT-".str_ireplace(['+', ' ', '-', '.', '(', ')', ','], '', $faker->unique()->phoneNumber()),
+        //             'whatsapp_number_id' => $number->id,
+        //             'company_id' => $number->company_id,
+        //             'from' => str_ireplace(['+', ' ', '-', '.', '(', ')', ','], '', $faker->unique()->phoneNumber())
+        //         ]
+        //     ]);
+        // }
+
+        // $chats = WhatsappChat::all();
+
+        // foreach($chats as $chat) {
+        //     \DB::table('whatsapp_messages')->insert([
+        //         [
+        //             'id' => $faker->unique()->uuid(),
+        //             'company_id' => $chat->company_id,
+        //             'whatsapp_chat_id' => $chat->id,
+        //             'type' => 'text',
+        //             'badge' => 'input',
+        //             'text' => $faker->text(),
+        //             'status' => 'read',
+        //         ],
+        //         [
+        //             'id' => $faker->unique()->uuid(),
+        //             'company_id' => $chat->company_id,
+        //             'whatsapp_chat_id' => $chat->id,
+        //             'type' => 'text',
+        //             'badge' => 'output',
+        //             'text' => $faker->text(),
+        //             'status' => 'read',
+        //         ],
+        //         [
+        //             'id' => $faker->unique()->uuid(),
+        //             'company_id' => $chat->company_id,
+        //             'whatsapp_chat_id' => $chat->id,
+        //             'type' => 'text',
+        //             'badge' => 'input',
+        //             'text' => $faker->text(),
+        //             'status' => 'read',
+        //         ],
+        //         [
+        //             'id' => $faker->unique()->uuid(),
+        //             'company_id' => $chat->company_id,
+        //             'whatsapp_chat_id' => $chat->id,
+        //             'type' => 'text',
+        //             'badge' => 'input',
+        //             'text' => $faker->text(),
+        //             'status' => 'read',
+        //         ],
+        //         [
+        //             'id' => $faker->unique()->uuid(),
+        //             'company_id' => $chat->company_id,
+        //             'whatsapp_chat_id' => $chat->id,
+        //             'type' => 'text',
+        //             'badge' => 'output',
+        //             'text' => $faker->text(),
+        //             'status' => 'read',
+        //         ],
+        //         [
+        //             'id' => $faker->unique()->uuid(),
+        //             'company_id' => $chat->company_id,
+        //             'whatsapp_chat_id' => $chat->id,
+        //             'type' => 'text',
+        //             'badge' => 'input',
+        //             'text' => $faker->text(),
+        //             'status' => 'unread',
+        //         ],
+        //     ]);
+        // }
         
         // Application::factory()->count(20)->create();
         // WhatsappAccount::factory()->count(50)->create();
