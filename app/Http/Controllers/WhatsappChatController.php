@@ -134,12 +134,13 @@ class WhatsappChatController extends Controller
     ): JsonResponse
     {
         try {
-            WhatsappChatService::update($request, $companyId, $id);
+            $response = WhatsappChatService::update($request, $companyId, $id);
             
             return response()->json([
                 'status' => 200,
                 'title' => 'Completado',
                 'details' => 'Chat actualizado correctamente',
+                'data' => $response
             ], 200);
         } catch (\Exception $error) {
             $code = $error->getCode() ?: 500;

@@ -2,6 +2,7 @@
 
 namespace App\Services\whatsapp_chats;
 
+use App\Models\WhatsappChat;
 use App\Repositories\whatsapp_chats\WhatsappChatRepository;
 use Illuminate\Http\Request;
 
@@ -22,13 +23,13 @@ class UpdateWhatsappChatService
      * @param Request $request
      * @param string $companyId
      * @param string $id
-     * @return void
+     * @return WhatsappChat
      */
     public static function update(
         Request $request, 
         string $companyId, 
         string $id
-    ): void
+    ): WhatsappChat
     {
         $whatsappChat = WhatsappChatRepository::show($companyId, $id);
 
@@ -36,35 +37,15 @@ class UpdateWhatsappChatService
             throw new \Exception("El chat seleccionado no existe", 400);
         }
 
-        $whatsapp_number_id = isset($request->whatsapp_number_id) 
-            ? $request->whatsapp_number_id 
-            : $whatsappChat->whatsapp_number_id;
+        $whatsapp_number_id = $request->input('whatsapp_number_id', $whatsappChat->whatsapp_number_id);
+        $from = $request->input('from', $whatsappChat->from);
+        $contact_name = $request->input('contact_name', $whatsappChat->contact_name);
+        $user_name = $request->input('user_name', $whatsappChat->user_name);
+        $last_message = $request->input('last_message', $whatsappChat->last_message);
+        $unread_messages = $request->input('unread_messages', $whatsappChat->unread_messages);
+        $status = $request->input('status', $whatsappChat->status);
 
-        $from = isset($request->from) 
-            ? $request->from 
-            : $whatsappChat->from;
-
-        $contact_name = isset($request->contact_name) 
-            ? $request->contact_name 
-            : $whatsappChat->contact_name;
-
-        $user_name = isset($request->user_name) 
-            ? $request->user_name 
-            : $whatsappChat->user_name;
-
-        $last_message = isset($request->last_message) 
-            ? $request->last_message 
-            : $whatsappChat->last_message;
-
-        $unread_messages = isset($request->unread_messages) 
-            ? $request->unread_messages 
-            : $whatsappChat->unread_messages;
-
-        $status = isset($request->status) 
-            ? $request->status 
-            : $whatsappChat->status;
-
-        WhatsappChatRepository::update($companyId, $id, [
+        return WhatsappChatRepository::update($companyId, $id, [
             'whatsapp_number_id' => $whatsapp_number_id,
             'from' => $from,
             'contact_name' => $contact_name,

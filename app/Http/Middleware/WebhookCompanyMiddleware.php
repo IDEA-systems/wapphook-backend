@@ -9,17 +9,6 @@ use App\Repositories\companies\CompanyRepository;
 
 class WebhookCompanyMiddleware
 {
-    public function deniedResponse(
-        $name = "Access denied", 
-        $message = "Incorrect credentials",
-        $status = 403, 
-    ) {
-        return response()->json([
-            "name" => $name,
-            "message" => $message
-        ], $status);
-    }
-
     /**
      * Handle an incoming request.
      *
@@ -32,11 +21,10 @@ class WebhookCompanyMiddleware
         $company = CompanyRepository::show($companyId);
 
         if (!$company) {
-            return $this->deniedResponse(
-                "No encontrado", 
-                "La ruta solicitada no existe", 
-                404
-            );
+            return response()->json([
+                "name" => "No encontrado",
+                "message" => "La ruta solicitada no existe"
+            ], 404);
         }
 
         return $next($request);
