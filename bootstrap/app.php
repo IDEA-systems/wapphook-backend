@@ -36,7 +36,7 @@ return Application::configure(basePath: dirname(__DIR__))
             return response()->json([
                 "status" => 401,
                 "name" => "No autenticado",
-                "message" => "No se ha podido autenticar al usuario"
+                "message" => "No estás autenticado para realizar esta acción"
             ], 401);
         });
 
@@ -55,8 +55,8 @@ return Application::configure(basePath: dirname(__DIR__))
 
             return response()->json([
                 "status" => 500,
-                "name" => "Error interno del servidor",
-                "message" => "Ha ocurrido un error inesperado"
+                "name" => "Exception error",
+                "message" => $error->getMessage()
             ], 500);
         });
 
@@ -65,7 +65,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
             return response()->json([
                 "status" => 500,
-                "name" => "Error interno del servidor",
+                "name" => "Throwable error",
                 "message" => "Ha ocurrido un error inesperado"
             ], 500);
         });

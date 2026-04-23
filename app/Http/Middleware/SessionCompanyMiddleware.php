@@ -15,17 +15,6 @@ use App\Repositories\companies\CompanyRepository;
  */
 class SessionCompanyMiddleware
 {
-    public function deniedResponse(
-        $name = "Access denied", 
-        $message = "Incorrect credentials",
-        $status = 403, 
-    ) {
-        return response()->json([
-            "name" => $name,
-            "message" => $message
-        ], $status);
-    }
-
     /**
      * Handle an incoming request.
      *
@@ -33,26 +22,29 @@ class SessionCompanyMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+        // Importante para evitar reenviar a paginas por defecto que no existe en la API
+        // Ejemplo: Route [login] not defined. Si el token es inválido o ha expirado.
+        // Laravel intenta redirigir a la ruta 'login' por defecto, lo que no existe en esta API.
+        $request->headers->set('Accept', 'application/json');
+        
         $companyId = $request->route('companyId');
 
         $company = CompanyRepository::show($companyId);
 
         if (!$company) {
-            return $this->deniedResponse(
-                "No autorizado",
-                "Los recursos solicitados no existen",
-                400
-            );
+            return response()->json([
+                "name" => "No autorizado",
+                "message" => "Los recursos solicitados no existen"
+            ], 400);
         }
 
         $user = $request->user();
 
         if ($user->company_id != $company->id) {
-            return $this->deniedResponse(
-                "No authorizado",
-                "Los datos de autenticación son incorrectos",
-                403
-            );
+            return response()->json([
+                "name" => "No autorizado",
+                "message" => "Los datos de autenticación son incorrectos"
+            ], 403);
         }
 
         return $next($request);
